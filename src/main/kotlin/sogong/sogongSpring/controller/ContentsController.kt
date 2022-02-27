@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class ContentsController {
     @GetMapping
     fun testpage():ResponseEntity<String>{
-        val hello = "Hello!! API!!"
+        val hello = "Hello!! API!! 하이하이!!"
         return ResponseEntity.ok(hello)
     }
 }
