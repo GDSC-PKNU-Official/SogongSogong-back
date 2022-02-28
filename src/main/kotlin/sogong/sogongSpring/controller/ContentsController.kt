@@ -12,7 +12,7 @@ class ContentsController {
     @GetMapping
     fun testpage():ResponseEntity<String>{
         val hello = "Hello!! API!! 다시 한번 테스트다..."
-        val test = "음..."
+        val test = "조다은님 정말 똥이시네요."
         return ResponseEntity.ok(hello)
     }
 }
