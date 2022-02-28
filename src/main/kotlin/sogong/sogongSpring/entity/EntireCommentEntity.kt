@@ -1,25 +1,29 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
+import java.util.Date
 import javax.persistence.*
 
 @Entity
+@NoArgsConstructor
 @Table(name = "ENTIRE_COMMENT")
-data class EntireCommentEntity(
+class EntireCommentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val commentid :Int ,
 
-    //외래키 설정해야함
-    @Column(nullable = false)
-    private val userid : Int,
+    @ManyToOne
+    @JoinColumn(name="userid",nullable = false)
+    private val userid : UserLoginEntity,
 
-    //외래키 설정해야함
-    @Column(nullable = false)
-    private val postid : Int,
+    @ManyToOne
+    @JoinColumn(name="postid",nullable = false)
+    private val postid : EntirePostEntity,
 
     @Column(nullable = false)
-    private var date : DateTimeFormat,
+    @Temporal(TemporalType.TIMESTAMP)
+    private var date : Date,
 
     @Column(nullable = false)
     private var content : String

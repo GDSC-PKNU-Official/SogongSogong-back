@@ -1,23 +1,25 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import javax.persistence.*
 
 
 @Entity
+@NoArgsConstructor
 @Table(name = "USER_HASHTAG")
-data class UserHashtagEntity(
+class UserHashtagEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val userhashid : Int,
 
-    //외래키 설정 해야함
-    @Column(nullable = false)
-    private val userid : Int,
+    @ManyToOne
+    @JoinColumn(name="userid", nullable = false)
+    private val userid : UserLoginEntity,
 
     @Column(nullable = false)
     private var groupid : Int,
 
-    //외래키 설정 해야함
-    @Column(nullable = false)
-    private var hashid : Int
+    @ManyToOne
+    @JoinColumn(name="hashid", nullable = false)
+    private var hashid : HashtagDbEntity
 )

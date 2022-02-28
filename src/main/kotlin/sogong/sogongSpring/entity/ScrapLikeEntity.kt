@@ -1,22 +1,24 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import javax.persistence.*
 
 @Entity
+@NoArgsConstructor
 @Table(name = "SCRAP_LIKE")
-data class ScrapLikeEntity(
+class ScrapLikeEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val scrapid : Int,
 
-    //외래키 설정 해야함
-    @Column(nullable = false)
-    private val userid : Int,
+    @ManyToOne
+    @JoinColumn(name="userid",nullable = false)
+    private val userid : UserLoginEntity,
 
-    //외래키 설정 해야함
-    @Column(nullable = false)
-    private val postid : Int,
+    @ManyToOne
+    @JoinColumn(name="postid",nullable = false)
+    private val postid : EntirePostEntity,
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private val category : Boolean
 )
