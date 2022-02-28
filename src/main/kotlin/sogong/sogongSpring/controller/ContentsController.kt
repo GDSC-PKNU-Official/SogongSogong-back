@@ -12,6 +12,7 @@ class ContentsController {
     @GetMapping
     fun testpage():ResponseEntity<String>{
         val hello = "Hello!! API!! 다시 한번 테스트다..."
+        val test = "음..."
         return ResponseEntity.ok(hello)
     }
 }
