@@ -1,19 +1,23 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
+import java.util.*
 import javax.persistence.*
 
 @Entity
+@NoArgsConstructor
 @Table(name = "BEST_POST")
-data class BestPostEntity(
+class BestPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val bestid : Int,
 
-    //외래키 설정해야 함
-    @Column(nullable = false)
-    private val postid : Int,
+    @ManyToOne
+    @JoinColumn(name = "postid", nullable = false)
+    private val postid : EntirePostEntity,
 
     @Column(nullable = false)
-    private var date : DateTimeFormat
+    @Temporal(TemporalType.TIMESTAMP)
+    private var date : Date
 )

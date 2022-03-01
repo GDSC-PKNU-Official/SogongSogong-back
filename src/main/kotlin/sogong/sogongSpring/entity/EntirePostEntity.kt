@@ -1,19 +1,22 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import org.hibernate.annotations.GeneratorType
 import org.springframework.format.annotation.DateTimeFormat
+import java.util.*
 import javax.persistence.*
 
 @Entity
+@NoArgsConstructor
 @Table(name = "ENTIRE_POST")
-data class EntirePostEntity(
+class EntirePostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val postid : Int,
 
-    //외래키 설정해야 함
-    @Column(nullable = false)
-    private val userid : Int,
+    @ManyToOne
+    @JoinColumn(name = "userid", nullable = false)
+    private val userid : UserLoginEntity,
 
     @Column(nullable = false, length = 30)
     private var subject : String,
@@ -22,7 +25,8 @@ data class EntirePostEntity(
     private var content : String,
 
     @Column(nullable = false)
-    private var date : DateTimeFormat,
+    @Temporal(TemporalType.TIMESTAMP)
+    private var date : Date,
 
     //추후 변경될 수 있음
     @Column(nullable = false)
@@ -31,9 +35,9 @@ data class EntirePostEntity(
     @Column(nullable = false, length = 50)
     private var hashtag : String,
 
-    @Column
-    private var countcomment : Int = 0,
+    @Column(columnDefinition = "integer default 0")
+    private var countcomment : Int,
 
-    @Column
-    private var countlike : Int = 0
+    @Column(columnDefinition = "integer default 0")
+    private var countlike : Int
 )

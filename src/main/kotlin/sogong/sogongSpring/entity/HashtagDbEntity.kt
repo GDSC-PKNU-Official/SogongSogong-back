@@ -1,10 +1,12 @@
 package sogong.sogongSpring.entity
 
+import lombok.NoArgsConstructor
 import javax.persistence.*
 
 @Entity
+@NoArgsConstructor
 @Table(name = "HASHTAG_DB")
-data class HashtagDbEntity(
+class HashtagDbEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private val hashid : Int,
