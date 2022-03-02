@@ -1,7 +1,14 @@
 package sogong.sogongSpring.repository
 
 import org.springframework.data.jpa.repository.JpaRepository
-import sogong.sogongSpring.entity.*
+import org.springframework.stereotype.Repository
+import sogong.sogongSpring.entity.UserLoginEntity
 
-interface UserLoginRepository : JpaRepository<UserLoginEntity, Int>{
+/**
+ * 로그인 페이지에서 CRUD가 무엇이 필요할까?
+ * Userid, PWD
+ */
+
+@Repository
+interface UserLoginRepository: JpaRepository<UserLoginEntity, Int> {
 }

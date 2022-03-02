@@ -29,6 +29,8 @@ dependencies {
 	implementation("mysql:mysql-connector-java")
 	implementation("org.javassist:javassist:3.15.0-GA")
 
+	// lombok 추가
+	implementation("org.projectlombok:lombok:1.18.22")
 }
 
 tasks.withType<KotlinCompile> {

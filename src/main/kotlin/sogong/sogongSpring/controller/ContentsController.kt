@@ -1,18 +1,23 @@
 package sogong.sogongSpring.controller
 
+import org.springframework.boot.web.server.Cookie
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import sogong.sogongSpring.entity.UserLoginEntity
 
 
 @RestController
 @RequestMapping("/")
 class ContentsController {
-    @GetMapping
-    fun testpage():ResponseEntity<String>{
-        val hello = "Hello!! API!! 다시 한번 테스트다..."
-        val test = "조다은님 정말 똥이시네요 정말.."
-        return ResponseEntity.ok(hello)
+    @RequestMapping(value = ["/login"], method = [RequestMethod.GET])
+    fun userLogin(
+        userLoginEntity: UserLoginEntity,
+        @CookieValue(value = "REMEMBER", required = false)
+        rememberCookie: Cookie
+    ) {
     }
 }
