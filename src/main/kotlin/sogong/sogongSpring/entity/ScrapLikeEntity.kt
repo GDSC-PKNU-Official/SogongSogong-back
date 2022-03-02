@@ -9,7 +9,7 @@ import javax.persistence.*
 class ScrapLikeEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val scrapId : Int,
+    private val scrapid : Int,
 
     @ManyToOne
     @JoinColumn(name="userid",nullable = false)
@@ -17,7 +17,7 @@ class ScrapLikeEntity(
 
     @ManyToOne
     @JoinColumn(name="postid",nullable = false)
-    private val postId : EntirePostEntity,
+    private val postid : EntirePostEntity,
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private val category : Boolean
