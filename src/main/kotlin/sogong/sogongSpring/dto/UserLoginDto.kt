@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.*
 
 data class UserLoginDto(
-    val userid: Int? = null,
+    val userid: Long? = null,
     val name: String? = null,
     var passwd: String? = null,
     var bday: Date? = null,

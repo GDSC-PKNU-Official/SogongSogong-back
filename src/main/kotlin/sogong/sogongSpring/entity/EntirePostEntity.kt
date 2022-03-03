@@ -12,9 +12,9 @@ import javax.persistence.*
 class EntirePostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val postid : Int,
+    private val postid : Long,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
     private val userid : UserLoginEntity,
 

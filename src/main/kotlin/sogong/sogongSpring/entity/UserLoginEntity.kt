@@ -14,7 +14,7 @@ import javax.persistence.GenerationType.*
 class UserLoginEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private val userid: Int,
+    private val userid: Long,
 
     @Column(length = 45, nullable = false)
     private val name: String,

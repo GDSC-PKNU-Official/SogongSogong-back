@@ -9,13 +9,13 @@ import javax.persistence.*
 class ScrapLikeEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val scrapid : Int,
+    private val scrapid : Long,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid",nullable = false)
     private val userid : UserLoginEntity,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="postid",nullable = false)
     private val postid : EntirePostEntity,
 

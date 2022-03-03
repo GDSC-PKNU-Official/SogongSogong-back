@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.*
 
 data class HotPostDto(
-    val hotid: Int? = null,
-    val postid: EntirePostDto? = null,
+    val hotid: Long? = null,
+    val postid: Long? = null,
     var date: Date? = null
 ) : Serializable

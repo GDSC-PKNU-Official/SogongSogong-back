@@ -7,9 +7,9 @@ import javax.persistence.*
 class BasicLoginEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val basicid : Int,
+    private val basicid : Long,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
     private val userid : UserLoginEntity,
 
