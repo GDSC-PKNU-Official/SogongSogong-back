@@ -10,5 +10,5 @@ import sogong.sogongSpring.entity.UserLoginEntity
  */
 
 @Repository
-interface UserLoginRepository: JpaRepository<UserLoginEntity, Int> {
+interface UserLoginRepository: JpaRepository<UserLoginEntity, Long> {
 }

@@ -11,9 +11,9 @@ import javax.persistence.*
 class HotPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val hotid : Int,
+    private val hotid : Long,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="postid",nullable = false)
     private val postid : EntirePostEntity,
 

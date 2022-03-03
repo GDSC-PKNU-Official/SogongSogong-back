@@ -4,9 +4,9 @@ import java.io.Serializable
 import java.util.*
 
 data class EntireCommentDto(
-    val commentid: Int? = null,
-    val userid: UserLoginDto? = null,
-    val postid: EntirePostDto? = null,
+    val commentid: Long? = null,
+    val userid: Long? = null,
+    val postid: Long? = null,
     var date: Date? = null,
     var content: String? = null
 ) : Serializable

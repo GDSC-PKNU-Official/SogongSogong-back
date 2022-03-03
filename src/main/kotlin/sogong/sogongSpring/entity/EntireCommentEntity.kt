@@ -11,13 +11,13 @@ import javax.persistence.*
 class EntireCommentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val commentid :Int ,
+    private val commentid :Long ,
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid",nullable = false)
     private val userid : UserLoginEntity,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="postid",nullable = false)
     private val postid : EntirePostEntity,
 

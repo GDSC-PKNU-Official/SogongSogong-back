@@ -9,7 +9,7 @@ import javax.persistence.*
 class HashtagDbEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val hashid : Int,
+    private val hashid : Long,
 
     @Column(nullable = false, length = 45)
     private val hashname : String
