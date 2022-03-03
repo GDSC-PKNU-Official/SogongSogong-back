@@ -5,12 +5,12 @@ import java.util.*
 
 data class EntirePostDto(
     val postid: Long? = null,
-    val userid: Long? = null,
-    var subject: String? = null,
-    var content: String? = null,
-    var date: Date? = null,
+    val userid: Long,
+    var subject: String,
+    var content: String,
+    var date: Date,
     var picture: String? = null,
-    var hashtag: String? = null,
+    var hashtag: String,
     var countcomment: Int = 0,
     var countlike: Int = 0
 ) : Serializable

@@ -5,6 +5,6 @@ import java.util.*
 
 data class BestPostDto(
     val bestid: Long? = null,
-    val postid: Long? = null,
-    var date: Date? = null
+    val postid: Long,
+    var date: Date
 ) : Serializable

@@ -11,4 +11,5 @@ import sogong.sogongSpring.entity.UserLoginEntity
 
 @Repository
 interface UserLoginRepository: JpaRepository<UserLoginEntity, Long> {
+    fun findByName(number:String):List<UserLoginEntity> //findByName 함수 추가
 }
