@@ -14,5 +14,6 @@ class UserLoginService {
         this.userLoginRepository = userLoginRepository
     }
 
+    fun findAllUser() = userLoginRepository.findAll()
 
 }

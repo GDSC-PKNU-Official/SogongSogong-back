@@ -22,4 +22,8 @@ class UserHashtagEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hashid", nullable = false)
     private var hashid : HashtagDbEntity
-)
+) {
+    override fun toString(): String {
+        return "UserHashtagEntity(userhashid=$userhashid, userid=$userid, groupid=$groupid, hashid=$hashid)"
+    }
+}

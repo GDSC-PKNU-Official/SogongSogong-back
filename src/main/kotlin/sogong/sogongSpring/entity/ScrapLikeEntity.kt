@@ -21,4 +21,8 @@ class ScrapLikeEntity(
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private val category : Boolean
-)
+) {
+    override fun toString(): String {
+        return "ScrapLikeEntity(scrapid=$scrapid, userid=$userid, postid=$postid, category=$category)"
+    }
+}

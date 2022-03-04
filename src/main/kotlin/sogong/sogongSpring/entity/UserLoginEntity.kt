@@ -1,11 +1,10 @@
 package sogong.sogongSpring.entity
 
-import lombok.*
+import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
-import java.text.DateFormat
 import java.util.*
 import javax.persistence.*
-import javax.persistence.GenerationType.*
+import javax.persistence.GenerationType.IDENTITY
 
 //FK Fetch type 차차 수정할 것!
 @Entity
@@ -14,7 +13,7 @@ import javax.persistence.GenerationType.*
 class UserLoginEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private val userid: Long ?= null,
+    private val userid: Long? = null,
 
     @Column(length = 45, nullable = false)
     private val name: String,
@@ -38,4 +37,10 @@ class UserLoginEntity(
 
     @Column(length = 50)
     private var sectors: String? = null
-)
+
+
+) {
+    override fun toString(): String {
+        return "UserLoginEntity(userid=$userid, name='$name', passwd=$passwd, bday=$bday, phone='$phone', social=$social, business=$business, sectors=$sectors)"
+    }
+}

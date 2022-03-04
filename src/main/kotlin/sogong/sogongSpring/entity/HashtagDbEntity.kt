@@ -13,4 +13,8 @@ class HashtagDbEntity(
 
     @Column(nullable = false, length = 45)
     private val hashname : String
-)
+) {
+    override fun toString(): String {
+        return "HashtagDbEntity(hashid=$hashid, hashname='$hashname')"
+    }
+}
