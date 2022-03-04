@@ -4,5 +4,5 @@ import java.io.Serializable
 
 data class HashtagDbDto(
     val hashid: Long? = null,
-    val hashname: String? = null
+    val hashname: String
 ) : Serializable

@@ -5,11 +5,11 @@ import java.util.*
 
 data class UserLoginDto(
     val userid: Long? = null,
-    val name: String? = null,
+    val name: String,
     var passwd: String? = null,
-    var bday: Date? = null,
-    val phone: String? = null,
-    val social: Boolean? = null,
-    var business: Boolean? = null,
+    var bday: Date,
+    val phone: String,
+    val social: Boolean,
+    var business: Boolean,
     var sectors: String? = null
 ) : Serializable

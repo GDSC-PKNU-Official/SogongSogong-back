@@ -14,13 +14,13 @@ import javax.persistence.GenerationType.*
 class UserLoginEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private val userid: Long,
+    private val userid: Long ?= null,
 
     @Column(length = 45, nullable = false)
     private val name: String,
 
     @Column(nullable = true)
-    private var passwd: String,
+    private var passwd: String? = null,
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -37,5 +37,5 @@ class UserLoginEntity(
     private var business: Boolean,
 
     @Column(length = 50)
-    private var sectors: String
+    private var sectors: String? = null
 )

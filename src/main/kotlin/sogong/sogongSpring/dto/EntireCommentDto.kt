@@ -5,8 +5,8 @@ import java.util.*
 
 data class EntireCommentDto(
     val commentid: Long? = null,
-    val userid: Long? = null,
-    val postid: Long? = null,
-    var date: Date? = null,
-    var content: String? = null
+    val userid: Long,
+    val postid: Long,
+    var date: Date,
+    var content: String
 ) : Serializable

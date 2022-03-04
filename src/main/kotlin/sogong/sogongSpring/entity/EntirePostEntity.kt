@@ -36,8 +36,8 @@ class EntirePostEntity(
     private var hashtag : String,
 
     @Column(columnDefinition = "integer default 0")
-    private var countcomment : Int,
+    private var countcomment : Int = 0,
 
     @Column(columnDefinition = "integer default 0")
-    private var countlike : Int
+    private var countlike : Int = 0
 )
