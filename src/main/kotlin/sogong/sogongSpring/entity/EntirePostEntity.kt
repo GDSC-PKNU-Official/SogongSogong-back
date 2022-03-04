@@ -40,4 +40,8 @@ class EntirePostEntity(
 
     @Column(columnDefinition = "integer default 0")
     private var countlike : Int = 0
-)
+) {
+    override fun toString(): String {
+        return "EntirePostEntity(postid=$postid, userid=$userid, subject='$subject', content='$content', date=$date, picture='$picture', hashtag='$hashtag', countcomment=$countcomment, countlike=$countlike)"
+    }
+}

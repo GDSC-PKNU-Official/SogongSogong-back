@@ -27,4 +27,8 @@ class EntireCommentEntity(
 
     @Column(nullable = false)
     private var content : String
-)
+) {
+    override fun toString(): String {
+        return "EntireCommentEntity(commentid=$commentid, userid=$userid, postid=$postid, date=$date, content='$content')"
+    }
+}
