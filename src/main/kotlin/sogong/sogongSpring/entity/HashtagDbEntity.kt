@@ -6,15 +6,11 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "HASHTAG_DB")
-class HashtagDbEntity(
+data class HashtagDbEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val hashid : Long,
+    val hashid : Long,
 
     @Column(nullable = false, length = 45)
-    private val hashname : String
-) {
-    override fun toString(): String {
-        return "HashtagDbEntity(hashid=$hashid, hashname='$hashname')"
-    }
-}
+    val hashname : String
+)

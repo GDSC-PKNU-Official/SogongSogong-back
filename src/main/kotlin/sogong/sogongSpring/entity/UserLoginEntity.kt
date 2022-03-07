@@ -1,5 +1,6 @@
 package sogong.sogongSpring.entity
 
+import lombok.Getter
 import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.*
@@ -10,7 +11,7 @@ import javax.persistence.GenerationType.IDENTITY
 @Entity
 @NoArgsConstructor
 @Table(name = "USER_LOGIN")
-class UserLoginEntity(
+data class UserLoginEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private val userid: Long? = null,
@@ -37,10 +38,4 @@ class UserLoginEntity(
 
     @Column(length = 50)
     private var sectors: String? = null
-
-
-) {
-    override fun toString(): String {
-        return "UserLoginEntity(userid=$userid, name='$name', passwd=$passwd, bday=$bday, phone='$phone', social=$social, business=$business, sectors=$sectors)"
-    }
-}
+)

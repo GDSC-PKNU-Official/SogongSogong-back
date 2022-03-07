@@ -6,4 +6,5 @@ import sogong.sogongSpring.entity.EntirePostEntity
 
 @Repository
 interface EntirePostRepository : JpaRepository<EntirePostEntity, Long> {
+    fun findByContent(content:String):List<EntirePostEntity>
 }
