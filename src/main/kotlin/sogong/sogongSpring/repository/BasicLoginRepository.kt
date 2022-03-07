@@ -6,4 +6,5 @@ import sogong.sogongSpring.entity.BasicLoginEntity
 
 @Repository
 interface BasicLoginRepository : JpaRepository<BasicLoginEntity, Long> {
+
 }

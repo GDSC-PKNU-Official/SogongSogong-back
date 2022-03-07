@@ -1,43 +1,44 @@
 package sogong.sogongSpring.entity
 
+import lombok.Getter
 import lombok.NoArgsConstructor
+import lombok.Setter
 import org.springframework.format.annotation.DateTimeFormat
+import sogong.sogongSpring.dto.UserLoginDto
 import java.util.*
 import javax.persistence.*
 import javax.persistence.GenerationType.IDENTITY
 
 //FK Fetch type 차차 수정할 것!
 @Entity
-@NoArgsConstructor
 @Table(name = "USER_LOGIN")
-class UserLoginEntity(
+data class UserLoginEntity(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private val userid: Long? = null,
+     val userid: Long? = null,
 
     @Column(length = 45, nullable = false)
-    private val name: String,
+     val name: String,
 
     @Column(nullable = true)
-    private var passwd: String? = null,
+     var passwd: String? = null,
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private var bday: Date,
+     var bday: Date,
 
     @Column(length = 11, nullable = false)
-    private val phone: String,
+     val phone: String,
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
-    private val social: Boolean,
+     val social: Boolean,
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
-    private var business: Boolean,
+     var business: Boolean,
 
     @Column(length = 50)
-    private var sectors: String? = null
-
+     var sectors: String? = null
 
 ) {
     override fun toString(): String {
