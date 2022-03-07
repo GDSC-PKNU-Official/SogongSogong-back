@@ -1,5 +1,6 @@
 package sogong.sogongSpring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import org.hibernate.annotations.GeneratorType
 import org.springframework.format.annotation.DateTimeFormat
@@ -12,36 +13,37 @@ import javax.persistence.*
 class EntirePostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val postid : Long,
+    val postid: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "userid", nullable = false)
-    private val userid : UserLoginEntity,
+    val userid: UserLoginEntity,
 
     @Column(nullable = false, length = 30)
-    private var subject : String,
+    var subject: String,
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private var content : String,
+    var content: String,
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private var date : Date,
+    var date: Date,
 
     //추후 변경될 수 있음
-    @Column(nullable = false)
-    private var picture : String,
+    @Column
+    var picture: String? =null,
 
     @Column(nullable = false, length = 50)
-    private var hashtag : String,
+    var hashtag: String,
 
     @Column(columnDefinition = "integer default 0")
-    private var countcomment : Int = 0,
+    var countcomment: Int = 0,
 
     @Column(columnDefinition = "integer default 0")
-    private var countlike : Int = 0
+    var countlike: Int = 0
 ) {
-    override fun toString(): String {
-        return "EntirePostEntity(postid=$postid, userid=$userid, subject='$subject', content='$content', date=$date, picture='$picture', hashtag='$hashtag', countcomment=$countcomment, countlike=$countlike)"
-    }
+//    override fun toString(): String {
+//        return "EntirePostEntity(postid=$postid, userid=$userid, subject='$subject', content='$content', date=$date, picture='$picture', hashtag='$hashtag', countcomment=$countcomment, countlike=$countlike)"
+//    }
 }

@@ -10,18 +10,18 @@ import javax.persistence.*
 class UserHashtagEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val userhashid : Long,
+    val userhashid : Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid", nullable = false)
-    private val userid : UserLoginEntity,
+    val userid : UserLoginEntity,
 
     @Column(nullable = false)
-    private var groupid : Long? = null,
+    var groupid : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hashid", nullable = false)
-    private var hashid : HashtagDbEntity
+    var hashid : HashtagDbEntity
 ) {
     override fun toString(): String {
         return "UserHashtagEntity(userhashid=$userhashid, userid=$userid, groupid=$groupid, hashid=$hashid)"

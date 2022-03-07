@@ -11,15 +11,15 @@ import javax.persistence.*
 class HotPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val hotid : Long,
+    val hotid : Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="postid",nullable = false)
-    private val postid : EntirePostEntity,
+    val postid : EntirePostEntity,
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private var date : Date
+    var date : Date
 ) {
     override fun toString(): String {
         return "HotPostEntity(hotid=$hotid, postid=$postid, date=$date)"

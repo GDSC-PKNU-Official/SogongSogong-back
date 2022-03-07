@@ -9,10 +9,10 @@ import javax.persistence.*
 class HashtagDbEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val hashid : Long,
+    val hashid : Long,
 
     @Column(nullable = false, length = 45)
-    private val hashname : String
+    val hashname : String
 ) {
     override fun toString(): String {
         return "HashtagDbEntity(hashid=$hashid, hashname='$hashname')"
