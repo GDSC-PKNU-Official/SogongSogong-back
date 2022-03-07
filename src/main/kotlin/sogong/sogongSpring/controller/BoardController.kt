@@ -12,7 +12,7 @@ import sogong.sogongSpring.service.BoardService
 //@RequiredArgsConstructor // final 객체를 Constructor Injection 해준다! (Autowire 역할)
 @RequestMapping("/board")
 class BoardController {
-    lateinit var boardService : BoardService
+    var boardService : BoardService
 
     constructor(boardService: BoardService){
         this.boardService = boardService
@@ -20,6 +20,6 @@ class BoardController {
 
     @PostMapping("/edit")
     fun EditPost(@RequestBody entirePostDto : EntirePostDto): MutableList<EntirePostEntity> {
-        return boardService.saveBoard(entirePostDto)
+        return boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
     }
 }

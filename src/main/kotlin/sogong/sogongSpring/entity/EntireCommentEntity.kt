@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "ENTIRE_COMMENT")
-class EntireCommentEntity(
+data class EntireCommentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val commentid :Long ,
@@ -27,8 +27,4 @@ class EntireCommentEntity(
 
     @Column(nullable = false)
     var content : String
-) {
-    override fun toString(): String {
-        return "EntireCommentEntity(commentid=$commentid, userid=$userid, postid=$postid, date=$date, content='$content')"
-    }
-}
+)

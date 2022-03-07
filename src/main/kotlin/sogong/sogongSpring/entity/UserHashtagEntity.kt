@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "USER_HASHTAG")
-class UserHashtagEntity(
+data class UserHashtagEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val userhashid : Long,
@@ -22,8 +22,4 @@ class UserHashtagEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hashid", nullable = false)
     var hashid : HashtagDbEntity
-) {
-    override fun toString(): String {
-        return "UserHashtagEntity(userhashid=$userhashid, userid=$userid, groupid=$groupid, hashid=$hashid)"
-    }
-}
+)

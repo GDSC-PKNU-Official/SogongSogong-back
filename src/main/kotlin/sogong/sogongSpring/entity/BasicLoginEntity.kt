@@ -18,8 +18,4 @@ data class BasicLoginEntity(
 
     @Column(nullable = false, length = 20)
     var passwd : String
-) {
-    override fun toString(): String {
-        return "BasicLoginEntity(basicid=$basicid, userid=$userid, realid='$realid', passwd='$passwd')"
-    }
-}
+)

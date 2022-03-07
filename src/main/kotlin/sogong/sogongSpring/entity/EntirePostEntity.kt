@@ -10,7 +10,7 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "ENTIRE_POST")
-class EntirePostEntity(
+data class EntirePostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val postid: Long? = null,
@@ -42,8 +42,4 @@ class EntirePostEntity(
 
     @Column(columnDefinition = "integer default 0")
     var countlike: Int = 0
-) {
-//    override fun toString(): String {
-//        return "EntirePostEntity(postid=$postid, userid=$userid, subject='$subject', content='$content', date=$date, picture='$picture', hashtag='$hashtag', countcomment=$countcomment, countlike=$countlike)"
-//    }
-}
+)

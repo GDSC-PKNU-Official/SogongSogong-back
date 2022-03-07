@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "HOT_POST")
-class HotPostEntity(
+data class HotPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val hotid : Long,
@@ -20,8 +20,4 @@ class HotPostEntity(
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     var date : Date
-) {
-    override fun toString(): String {
-        return "HotPostEntity(hotid=$hotid, postid=$postid, date=$date)"
-    }
-}
+)

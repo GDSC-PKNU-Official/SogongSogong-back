@@ -8,7 +8,7 @@ import javax.persistence.*
 @Entity
 @NoArgsConstructor
 @Table(name = "BEST_POST")
-class BestPostEntity(
+data class BestPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val bestid : Long,
@@ -20,8 +20,4 @@ class BestPostEntity(
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     var date : Date
-) {
-    override fun toString(): String {
-        return "BestPostEntity(bestid=$bestid, postid=$postid, date=$date)"
-    }
-}
+)
