@@ -11,7 +11,7 @@ import javax.persistence.*
 data class HotPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val hotid : Long,
+    val hotid : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="postid",nullable = false)

@@ -11,7 +11,7 @@ import javax.persistence.*
 data class BestPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val bestid : Long,
+    val bestid : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postid", nullable = false)

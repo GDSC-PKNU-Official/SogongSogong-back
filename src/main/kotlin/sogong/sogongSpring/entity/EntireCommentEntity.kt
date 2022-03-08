@@ -1,5 +1,6 @@
 package sogong.sogongSpring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.Date
@@ -11,13 +12,15 @@ import javax.persistence.*
 data class EntireCommentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val commentid :Long ,
+    val commentid :Long? = null,
 
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name="userid",nullable = false)
     val userid : UserLoginEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name="postid",nullable = false)
     val postid : EntirePostEntity,
 

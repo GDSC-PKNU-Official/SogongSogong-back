@@ -10,7 +10,7 @@ import javax.persistence.*
 data class UserHashtagEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userhashid : Long,
+    val userhashid : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid", nullable = false)
