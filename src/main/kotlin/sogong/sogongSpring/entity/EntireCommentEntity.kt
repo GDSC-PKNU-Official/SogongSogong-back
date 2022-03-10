@@ -12,17 +12,17 @@ import javax.persistence.*
 data class EntireCommentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val commentid :Long? = null,
+    val commentId :Long? = null,
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name="userid",nullable = false)
-    val userid : UserLoginEntity,
+    @JoinColumn(name="userId",nullable = false)
+    val userId : UserLoginEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name="postid",nullable = false)
-    val postid : EntirePostEntity,
+    @JoinColumn(name="postId",nullable = false)
+    val postId : EntirePostEntity,
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

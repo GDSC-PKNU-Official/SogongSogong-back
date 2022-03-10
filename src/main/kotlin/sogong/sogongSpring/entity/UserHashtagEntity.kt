@@ -10,16 +10,16 @@ import javax.persistence.*
 data class UserHashtagEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userhashid : Long? = null,
+    val userHashId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userid", nullable = false)
-    val userid : UserLoginEntity,
+    @JoinColumn(name="userId", nullable = false)
+    val userId : UserLoginEntity,
 
     @Column(nullable = false)
-    var groupid : Long? = null,
+    var groupiId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="hashid", nullable = false)
-    var hashid : HashtagDbEntity
+    @JoinColumn(name="hashId", nullable = false)
+    var hashId : HashtagDbEntity
 )

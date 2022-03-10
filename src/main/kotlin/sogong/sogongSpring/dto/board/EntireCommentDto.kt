@@ -1,4 +1,4 @@
-package sogong.sogongSpring.dto
+package sogong.sogongSpring.dto.board
 
 import java.io.Serializable
 import java.util.*
