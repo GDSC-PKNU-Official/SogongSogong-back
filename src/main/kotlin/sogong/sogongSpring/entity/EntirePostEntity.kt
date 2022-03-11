@@ -13,12 +13,12 @@ import javax.persistence.*
 data class EntirePostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val postid: Long? = null,
+    val postId: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    @JoinColumn(name = "userid", nullable = false)
-    val userid: UserLoginEntity,
+    @JoinColumn(name = "userId", nullable = false)
+    val userId: UserLoginEntity,
 
     @Column(nullable = false, length = 30)
     var subject: String,
@@ -38,8 +38,8 @@ data class EntirePostEntity(
     var hashtag: String,
 
     @Column(columnDefinition = "integer default 0")
-    var countcomment: Int = 0,
+    var countComment: Int = 0,
 
     @Column(columnDefinition = "integer default 0")
-    var countlike: Int = 0
+    var countLike: Int = 0
 )

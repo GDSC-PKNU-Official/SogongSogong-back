@@ -7,14 +7,14 @@ import javax.persistence.*
 data class BasicLoginEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val basicid : Long,
+    val basicId : Long,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid", nullable = false)
-    val userid : UserLoginEntity,
+    @JoinColumn(name = "userId", nullable = false)
+    val userId : UserLoginEntity,
 
     @Column(nullable = false, length = 15)
-    val realid : String,
+    val realId : String,
 
     @Column(nullable = false, length = 20)
     var passwd : String

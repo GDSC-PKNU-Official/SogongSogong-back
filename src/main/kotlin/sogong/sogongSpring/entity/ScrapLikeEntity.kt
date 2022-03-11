@@ -1,5 +1,6 @@
 package sogong.sogongSpring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import javax.persistence.*
 
@@ -9,15 +10,17 @@ import javax.persistence.*
 data class ScrapLikeEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val scrapid : Long,
+    val scrapId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userid",nullable = false)
-    val userid : UserLoginEntity,
+    @JsonIgnore
+    @JoinColumn(name="userId",nullable = false)
+    val userId : UserLoginEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="postid",nullable = false)
-    val postid : EntirePostEntity,
+    @JsonIgnore
+    @JoinColumn(name="postId",nullable = false)
+    val postId : EntirePostEntity,
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     val category : Boolean

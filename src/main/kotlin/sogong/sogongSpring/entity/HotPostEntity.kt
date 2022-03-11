@@ -11,11 +11,11 @@ import javax.persistence.*
 data class HotPostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val hotid : Long,
+    val hotId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="postid",nullable = false)
-    val postid : EntirePostEntity,
+    @JoinColumn(name="postId",nullable = false)
+    val postId : EntirePostEntity,
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

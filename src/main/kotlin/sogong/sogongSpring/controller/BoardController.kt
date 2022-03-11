@@ -1,11 +1,18 @@
 package sogong.sogongSpring.controller
 
-import lombok.RequiredArgsConstructor
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import sogong.sogongSpring.dto.EntirePostDto
+import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
+import sogong.sogongSpring.dto.board.EntireCommentDto
+import sogong.sogongSpring.dto.board.EntirePostDto
+import sogong.sogongSpring.dto.board.ScrapLikeDto
+import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
+import sogong.sogongSpring.dto.boardedit.DeletePostDto
+import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
+import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
 import sogong.sogongSpring.service.BoardService
+import sogong.sogongSpring.service.BoardEditService
+import sogong.sogongSpring.service.BoardPrintService
 
 
 @RestController // JSON 형태로 결과 반환해줌!
@@ -13,13 +20,68 @@ import sogong.sogongSpring.service.BoardService
 @RequestMapping("/board")
 class BoardController {
     var boardService : BoardService
+    var boardServiceEdit : BoardEditService
+    var boardPrintService : BoardPrintService
 
-    constructor(boardService: BoardService){
+    constructor(boardService: BoardService, boardServiceEdit: BoardEditService, boardPrintService: BoardPrintService){
         this.boardService = boardService
+        this.boardServiceEdit = boardServiceEdit
+        this.boardPrintService = boardPrintService
     }
 
-    @PostMapping("/edit")
-    fun EditPost(@RequestBody entirePostDto : EntirePostDto): MutableList<EntirePostEntity> {
+    @PostMapping("/registPost")
+    fun registPost(@RequestBody entirePostDto : EntirePostDto): EntirePostEntity {
         return boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
+    }
+
+    @PostMapping("/registComment")
+    fun registComment(@RequestBody entireCommentDto : EntireCommentDto) : EntireCommentEntity{
+        return boardService.saveComment(entireCommentDto)
+    }
+
+    @PostMapping("/saveScrapLike")
+    fun registScrapLike(@RequestBody scrapLikeDto: ScrapLikeDto){
+        boardService.saveScrapLike(scrapLikeDto)
+    }
+
+    @PostMapping(value = ["/editPostAuth", "/editCommentAuth"])
+    fun editAuth(@RequestBody editPostCommentDto: EditPostCommentAuthDto) : Boolean{
+        return boardServiceEdit.editAuth(editPostCommentDto)
+    }
+
+    @PostMapping("/editPost")
+    fun editPost(@RequestBody editPostDto : EntirePostDto) : EntirePostEntity{
+        return boardServiceEdit.editPost(editPostDto)
+    }
+
+    @PostMapping("/editComment")
+    fun editComment(@RequestBody editCommentDto : EntireCommentDto) {
+        boardServiceEdit.editComment(editCommentDto)
+    }
+
+    @PostMapping("/deleteComment")
+    fun deleteComment(@RequestBody deleteCommentDto: DeleteCommentDto){
+        boardServiceEdit.deleteComment(deleteCommentDto)
+    }
+
+    @PostMapping("/deletePost")
+    fun deletePost(@RequestBody deletePostDto: DeletePostDto){
+        boardServiceEdit.deletePost(deletePostDto)
+    }
+
+    @GetMapping("/printEntirePost")
+    fun printPost() : MutableList<PrintEntirePostDto>{
+        return boardPrintService.printEntirePost()
+    }
+
+    @GetMapping("/printCommentByPost")
+    fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentDto>{
+        return boardPrintService.printComment(postId)
+    }
+
+    @GetMapping("/printScrapLike")
+    fun printScrapLike(@RequestParam("userId") userId:Long,
+                       @RequestParam("scrapLike") scrapLike:Boolean) : MutableList<PrintEntirePostDto>{
+        return boardPrintService.printScrapLike(userId, scrapLike)
     }
 }
