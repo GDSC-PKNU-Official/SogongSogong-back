@@ -14,15 +14,17 @@ import javax.transaction.Transactional
 @Service
 class BoardService {
     @Autowired //글을 저장하려는 변수
-    lateinit var entirePostRepository : EntirePostRepository
+    private lateinit var entirePostRepository : EntirePostRepository
     @Autowired //글을 저장할 때 userid가 유효한지 검증하려는 변수
-    lateinit var userLoginRepository : UserLoginRepository
+    private lateinit var userLoginRepository : UserLoginRepository
     @Autowired //댓글을 저장하려는 변수
-    lateinit var entireCommentRepository: EntireCommentRepository
+    private lateinit var entireCommentRepository: EntireCommentRepository
     @Autowired
-    lateinit var hotPostRepository: HotPostRepository
+    private lateinit var hotPostRepository: HotPostRepository
     @Autowired
-    lateinit var bestPostRepository: BestPostRepository
+    private lateinit var bestPostRepository: BestPostRepository
+    @Autowired
+    private lateinit var scrapLikeRepository: ScrapLikeRepository
 
     //MutableList<EntirePostEntity>로 반환하면 Json 형태로 잘 돌려보내줘요.
     @Transactional
@@ -73,14 +75,15 @@ class BoardService {
                 val hotPostEntity = HotPostEntity(postId=commentPostId.get(), date=Date())
                 hotPostRepository.save(hotPostEntity)
             }
+            println("33333333333333333333333")
+            println(entireCommentEntity.date)
 
             return entireCommentEntity
         }
         else throw java.lang.IllegalArgumentException("Userid & Postid Error!!!")
     }
     ////////////////////////////////////////////////////////////////
-    @Autowired
-    lateinit var scrapLikeRepository: ScrapLikeRepository
+
 
     @Transactional
     fun saveScrapLike(scrapLikeDto: ScrapLikeDto){

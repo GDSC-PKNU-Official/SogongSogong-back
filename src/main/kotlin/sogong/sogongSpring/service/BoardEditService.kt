@@ -20,13 +20,13 @@ import javax.transaction.Transactional
 @Service
 class BoardEditService {
     @Autowired //글을 저장하려는 변수
-    lateinit var entirePostRepository : EntirePostRepository
+    private lateinit var entirePostRepository : EntirePostRepository
     @Autowired //글을 저장할 때 userid가 유효한지 검증하려는 변수
-    lateinit var userLoginRepository : UserLoginRepository
+    private lateinit var userLoginRepository : UserLoginRepository
     @Autowired //댓글을 저장하려는 변수
-    lateinit var entireCommentRepository: EntireCommentRepository
+    private lateinit var entireCommentRepository: EntireCommentRepository
     @Autowired
-    lateinit var scrapLikeRepository: ScrapLikeRepository
+    private lateinit var scrapLikeRepository: ScrapLikeRepository
 
     ///////////////////////////////////////////////////////////////
     @Transactional

@@ -17,13 +17,13 @@ import sogong.sogongSpring.repository.UserLoginRepository
 class BoardPrintService {
 
     @Autowired
-    lateinit var entirePostRepository : EntirePostRepository
+    private lateinit var entirePostRepository : EntirePostRepository
     @Autowired
-    lateinit var entireCommentRepository: EntireCommentRepository
+    private lateinit var entireCommentRepository: EntireCommentRepository
     @Autowired
-    lateinit var userLoginRepository: UserLoginRepository
+    private lateinit var userLoginRepository: UserLoginRepository
     @Autowired
-    lateinit var scrapLikeRepository: ScrapLikeRepository
+    private lateinit var scrapLikeRepository: ScrapLikeRepository
 
     @RequestMapping
     fun printEntirePost() : MutableList<PrintEntirePostDto>{
