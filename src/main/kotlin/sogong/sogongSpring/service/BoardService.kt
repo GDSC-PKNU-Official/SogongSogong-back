@@ -75,8 +75,6 @@ class BoardService {
                 val hotPostEntity = HotPostEntity(postId=commentPostId.get(), date=Date())
                 hotPostRepository.save(hotPostEntity)
             }
-            println("33333333333333333333333")
-            println(entireCommentEntity.date)
 
             return entireCommentEntity
         }
