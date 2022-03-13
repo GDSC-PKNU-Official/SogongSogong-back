@@ -75,14 +75,14 @@ class BoardPrintService {
 
     //N+1 occurred
     @RequestMapping
-    fun printHotPost(pageable: Pageable) : MutableList<EntirePostEntity>{
+    fun printHotPost(pageable: Pageable) : Page<EntirePostEntity>{
         val hotPost = entirePostRepository.findHotPost(10, pageable)
         return hotPost
     }
 
     //N+1 occurred
     @RequestMapping
-    fun printBestPost(pageable: Pageable) : MutableList<EntirePostEntity>{
+    fun printBestPost(pageable: Pageable) : Page<EntirePostEntity>{
         val bestPost = entirePostRepository.findBestPost(10, pageable)
         return bestPost
     }

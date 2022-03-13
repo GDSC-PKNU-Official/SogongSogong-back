@@ -88,12 +88,12 @@ class BoardController {
     }
 
     @GetMapping("/printHotPost")
-    fun printHotPost(pageable: Pageable) : MutableList<EntirePostEntity>{
-        return boardPrintService.printHotPost(pageable)
+    fun printHotPost(pageable: Pageable) : List<EntirePostEntity>{
+        return boardPrintService.printHotPost(pageable).content //content만 적용
     }
 
     @GetMapping("/printBestPost")
-    fun printBestPost(pageable: Pageable) : MutableList<EntirePostEntity>{
-        return boardPrintService.printBestPost(pageable)
+    fun printBestPost(pageable: Pageable) : Page<EntirePostEntity>{
+        return boardPrintService.printBestPost(pageable) //page 전체만 적용
     }
 }
