@@ -13,6 +13,7 @@ import sogong.sogongSpring.repository.EntireCommentRepository
 import sogong.sogongSpring.repository.EntirePostRepository
 import sogong.sogongSpring.repository.ScrapLikeRepository
 import sogong.sogongSpring.repository.UserLoginRepository
+import java.time.LocalDateTime
 import java.util.*
 import javax.transaction.Transactional
 
@@ -72,7 +73,7 @@ class BoardEditService {
     @Transactional
     fun editComment(editCommentDto : EntireCommentDto){
         val editComment = entireCommentRepository.findById(editCommentDto.commentid!!).get()
-        editComment.date = Date()
+        editComment.date = LocalDateTime.now()
         editComment.content = editCommentDto.content
         //공백 content는 어떻게 처리?
     }

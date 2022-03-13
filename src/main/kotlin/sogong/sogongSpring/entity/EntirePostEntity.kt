@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import org.hibernate.annotations.GeneratorType
 import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 
@@ -26,9 +27,8 @@ data class EntirePostEntity(
     @Column(nullable = false, columnDefinition = "TEXT")
     var content: String,
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    var date: Date,
+    @Column(nullable = false, columnDefinition = "TIMESTAMP")
+    var date: LocalDateTime,
 
     //추후 변경될 수 있음
     @Column

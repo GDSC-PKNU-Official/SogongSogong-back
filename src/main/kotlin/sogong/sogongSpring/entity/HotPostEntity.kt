@@ -2,6 +2,7 @@ package sogong.sogongSpring.entity
 
 import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 
@@ -17,7 +18,6 @@ data class HotPostEntity(
     @JoinColumn(name="postId",nullable = false)
     val postId : EntirePostEntity,
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    var date : Date
+    @Column(nullable = false, columnDefinition = "TIMESTAMP")
+    var date : LocalDateTime
 )

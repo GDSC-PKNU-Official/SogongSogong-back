@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestMapping
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
-import sogong.sogongSpring.entity.EntireCommentEntity
-import sogong.sogongSpring.entity.EntirePostEntity
-import sogong.sogongSpring.entity.UserLoginEntity
 import sogong.sogongSpring.repository.EntireCommentRepository
 import sogong.sogongSpring.repository.EntirePostRepository
 import sogong.sogongSpring.repository.ScrapLikeRepository
