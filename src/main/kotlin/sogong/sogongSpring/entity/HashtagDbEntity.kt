@@ -12,5 +12,8 @@ data class HashtagDbEntity(
     val hashId : Long? = null,
 
     @Column(nullable = false, length = 45)
-    val hashName : String
+    val hashName : String,
+
+    @Column(nullable = false)
+    val category : Boolean
 )

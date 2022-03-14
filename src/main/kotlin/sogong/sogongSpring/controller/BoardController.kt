@@ -1,5 +1,7 @@
 package sogong.sogongSpring.controller
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
@@ -70,12 +72,12 @@ class BoardController {
     }
 
     @GetMapping("/printEntirePost")
-    fun printPost() : MutableList<PrintEntirePostDto>{
-        return boardPrintService.printEntirePost()
+    fun printPost(pageable: Pageable) : Page<EntirePostEntity> {
+        return boardPrintService.printEntirePost(pageable)
     }
 
     @GetMapping("/printCommentByPost")
-    fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentDto>{
+    fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentEntity>{
         return boardPrintService.printComment(postId)
     }
 
@@ -83,5 +85,15 @@ class BoardController {
     fun printScrapLike(@RequestParam("userId") userId:Long,
                        @RequestParam("scrapLike") scrapLike:Boolean) : MutableList<PrintEntirePostDto>{
         return boardPrintService.printScrapLike(userId, scrapLike)
+    }
+
+    @GetMapping("/printHotPost")
+    fun printHotPost(pageable: Pageable) : List<EntirePostEntity>{
+        return boardPrintService.printHotPost(pageable).content //content만 적용
+    }
+
+    @GetMapping("/printBestPost")
+    fun printBestPost(pageable: Pageable) : Page<EntirePostEntity>{
+        return boardPrintService.printBestPost(pageable) //page 전체만 적용
     }
 }

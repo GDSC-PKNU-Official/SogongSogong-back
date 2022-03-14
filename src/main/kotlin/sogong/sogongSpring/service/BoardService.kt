@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
+import sogong.sogongSpring.dto.hashtag.PostHashtagDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.entity.*
 import sogong.sogongSpring.repository.*
-import java.util.*
+import java.time.LocalDateTime
 import javax.transaction.Transactional
 
 
@@ -26,6 +27,7 @@ class BoardService {
     @Autowired
     private lateinit var scrapLikeRepository: ScrapLikeRepository
 
+
     //MutableList<EntirePostEntity>로 반환하면 Json 형태로 잘 돌려보내줘요.
     @Transactional
     fun saveBoard(entirePostDto: EntirePostDto): EntirePostEntity {
@@ -40,9 +42,8 @@ class BoardService {
                 userId = postUserId.get(), //위에서 userid를 조회한 객체를 Entity의 userid 값으로 넣자!
                 subject = entirePostDto.subject, //나머지들은 그냥 있는 그대로 넣기.
                 content = entirePostDto.content,
-                date = Date(), //얘는 수정할거임 나중에.
+                date = LocalDateTime.now(),
                 picture = entirePostDto.picture,
-                hashtag = entirePostDto.hashtag,
                 countComment = entirePostDto.countcomment,
                 countLike = entirePostDto.countlike
             )
@@ -54,6 +55,7 @@ class BoardService {
     }
 
     //////////////////////////////////////////////////////////////
+
     @Transactional
     fun saveComment(entireCommentDto: EntireCommentDto) : EntireCommentEntity{
         val commentUserId = userLoginRepository.findById(entireCommentDto.userid)
@@ -63,7 +65,7 @@ class BoardService {
             val entireCommentEntity = EntireCommentEntity(
                 userId = commentUserId.get(),
                 postId = commentPostId.get(),
-                date = Date(),
+                date = LocalDateTime.now(),
                 content = entireCommentDto.content
             )
             entireCommentRepository.save(entireCommentEntity) //댓글 저장
@@ -72,7 +74,7 @@ class BoardService {
             entirePostRepository.save(commentPostId.get())
 
             if (commentPostId.get().countComment == 10){
-                val hotPostEntity = HotPostEntity(postId=commentPostId.get(), date=Date())
+                val hotPostEntity = HotPostEntity(postId=commentPostId.get(), date=LocalDateTime.now())
                 hotPostRepository.save(hotPostEntity)
             }
 
@@ -110,7 +112,7 @@ class BoardService {
 
                     //좋아요가 10개 될 때 best 게시글에 저장.
                     if(scrapLikePostId.get().countLike == 10){
-                        val bestPostEntity = BestPostEntity(postId=scrapLikePostId.get(), date=Date())
+                        val bestPostEntity = BestPostEntity(postId=scrapLikePostId.get(), date= LocalDateTime.now())
                         bestPostRepository.save(bestPostEntity)
                     }
                 }

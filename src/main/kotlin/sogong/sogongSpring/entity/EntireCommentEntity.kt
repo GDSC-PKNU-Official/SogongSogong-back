@@ -3,6 +3,7 @@ package sogong.sogongSpring.entity
 import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDateTime
 import java.util.Date
 import javax.persistence.*
 
@@ -24,9 +25,8 @@ data class EntireCommentEntity(
     @JoinColumn(name="postId",nullable = false)
     val postId : EntirePostEntity,
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    var date : Date,
+    @Column(nullable = false, columnDefinition = "TIMESTAMP")
+    var date : LocalDateTime,
 
     @Column(nullable = false)
     var content : String
