@@ -34,9 +34,6 @@ data class EntirePostEntity(
     @Column
     var picture: String? =null,
 
-    @Column(nullable = false, length = 50)
-    var hashtag: String,
-
     @Column(columnDefinition = "integer default 0")
     var countComment: Int = 0,
 

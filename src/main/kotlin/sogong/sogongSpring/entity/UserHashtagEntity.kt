@@ -17,7 +17,7 @@ data class UserHashtagEntity(
     val userId : UserLoginEntity,
 
     @Column(nullable = false)
-    var groupiId : Long? = null,
+    var groupId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="hashId", nullable = false)

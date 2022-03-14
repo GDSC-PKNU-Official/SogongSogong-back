@@ -64,7 +64,6 @@ class BoardEditService {
         editPost.content = editPostDto.content
         editPost.date = LocalDateTime.now()
         editPost.picture = editPostDto.picture
-        editPost.hashtag = editPostDto.hashtag
         //공백 subject, content는 어떻게 처리?
 
         return editPost
