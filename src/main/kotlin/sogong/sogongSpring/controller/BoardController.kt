@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
-import sogong.sogongSpring.dto.board.PostHashtagDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
 import sogong.sogongSpring.dto.boardedit.DeletePostDto
@@ -35,11 +34,6 @@ class BoardController {
     @PostMapping("/registPost")
     fun registPost(@RequestBody entirePostDto : EntirePostDto): EntirePostEntity {
         return boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
-    }
-
-    @PostMapping("/registPostHashtag")
-    fun registPostHashtag(@RequestBody postHashtagDto: PostHashtagDto){
-        boardService.savePostHashtag(postHashtagDto)
     }
 
     @PostMapping("/registComment")

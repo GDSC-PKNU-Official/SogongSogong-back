@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
-import sogong.sogongSpring.dto.board.PostHashtagDto
+import sogong.sogongSpring.dto.hashtag.PostHashtagDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.entity.*
 import sogong.sogongSpring.repository.*
 import java.time.LocalDateTime
-import java.util.*
 import javax.transaction.Transactional
 
 
@@ -27,10 +26,7 @@ class BoardService {
     private lateinit var bestPostRepository: BestPostRepository
     @Autowired
     private lateinit var scrapLikeRepository: ScrapLikeRepository
-    @Autowired
-    private lateinit var postHashtagRepository: PostHashtagRepository
-    @Autowired
-    private lateinit var hashtagDbRepository: HashtagDbRepository
+
 
     //MutableList<EntirePostEntity>로 반환하면 Json 형태로 잘 돌려보내줘요.
     @Transactional
@@ -59,16 +55,6 @@ class BoardService {
     }
 
     //////////////////////////////////////////////////////////////
-
-    @Transactional
-    fun savePostHashtag(postHashtagDto: PostHashtagDto){
-        val hashIds = hashtagDbRepository.findByHashNames(postHashtagDto.hashName)
-        val postId = entirePostRepository.findById(postHashtagDto.postId)
-        hashIds.forEach { i ->
-            val postHashtagEntity = PostHashtagEntity(hashId=i, postId=postId.get())
-            postHashtagRepository.save(postHashtagEntity)
-        }
-    }
 
     @Transactional
     fun saveComment(entireCommentDto: EntireCommentDto) : EntireCommentEntity{

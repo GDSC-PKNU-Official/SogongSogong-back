@@ -1,4 +1,4 @@
-package sogong.sogongSpring.dto.board
+package sogong.sogongSpring.dto.hashtag
 
 
 data class PostHashtagDto(
