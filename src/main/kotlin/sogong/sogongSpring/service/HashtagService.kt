@@ -68,10 +68,6 @@ class HashtagService {
             }
             else if (difAndSize<0){ //ex)해시태그 2->5개로
                 for(i:Int in 1..abs(difAndSize)){
-                    println(i)
-                    println(user)
-                    println(userHashTagDto.groupId)
-                    println(userHashTagDto.hashName[hash.size-1])
                     userHashtagRepository.save(
                         UserHashtagEntity(
                             userId = user.get(), groupId = userHashTagDto.groupId,
