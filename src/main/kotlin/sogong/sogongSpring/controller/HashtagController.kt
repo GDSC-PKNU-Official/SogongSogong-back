@@ -32,6 +32,11 @@ class HashtagController {
         hashtagService.editUserHashtag(userHashTagDto)
     }
 
+    @PostMapping("/editPostHashtag")
+    fun editPostHashtag(@RequestBody postHashtagDto: PostHashtagDto){
+        hashtagService.editPostHashtag(postHashtagDto)
+    }
+
     @GetMapping("/orSearchHashtag")
     fun searchPost(@RequestParam hashtag: List<String>) : List<EntirePostEntity>{
         return hashtagService.searchOrPost(hashtag)

@@ -78,6 +78,11 @@ class BoardController {
         return boardPrintService.printEntirePost(pageable)
     }
 
+    @GetMapping("/printOnePost")
+    fun printOnePost(postId:Long) : EntirePostEntity{
+        return boardPrintService.printOnePost(postId)
+    }
+
     @GetMapping("/printComment")
     fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentEntity>{
         return boardPrintService.printComment(postId)

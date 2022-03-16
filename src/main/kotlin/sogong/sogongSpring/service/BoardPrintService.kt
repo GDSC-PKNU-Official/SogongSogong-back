@@ -40,6 +40,13 @@ class BoardPrintService {
         return result
     }
 
+    @RequestMapping
+    fun printOnePost(postId:Long) : EntirePostEntity{
+        val post = entirePostRepository.findById(postId)
+        if (post.isEmpty) throw IllegalArgumentException("PostId Error!!!")
+        else return post.get()
+    }
+
     //DTO로 바꿀것!!!
     @RequestMapping
     fun printComment(postId:Long):MutableList<EntireCommentEntity>{

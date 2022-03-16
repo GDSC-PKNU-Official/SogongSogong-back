@@ -15,4 +15,7 @@ interface PostHashtagRepository : JpaRepository<PostHashtagEntity, Long> {
 
     @Query(value = "select hashId from post_hashtag where postId = :postId", nativeQuery = true)
     fun findHashByPost(@Param("postId") postId:Long) : List<Long>
+
+    @Query(value = "select * from post_hashtag where postId = :postId", nativeQuery = true)
+    fun findAllByPost(@Param("postId") postId:Long) : List<PostHashtagEntity>
 }
