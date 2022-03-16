@@ -3,8 +3,8 @@ package sogong.sogongSpring.dto.board
 import java.io.Serializable
 
 data class ScrapLikeDto(
-    val scrapid: Long? = null,
-    val userid: Long,
-    val postid: Long,
+    val scrapId: Long? = null,
+    val userId: Long,
+    val postId: Long,
     val category: Boolean
 ) : Serializable

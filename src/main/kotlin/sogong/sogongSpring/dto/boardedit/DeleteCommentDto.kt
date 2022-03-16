@@ -1,6 +1,6 @@
 package sogong.sogongSpring.dto.boardedit
 
 data class DeleteCommentDto(
-    val commentid : Long,
-    val postid : Long
+    val commmentId : Long,
+    val postId : Long
 ) : java.io.Serializable

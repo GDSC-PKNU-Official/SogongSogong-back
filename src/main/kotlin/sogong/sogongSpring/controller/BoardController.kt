@@ -32,13 +32,13 @@ class BoardController {
     }
 
     @PostMapping("/registPost")
-    fun registPost(@RequestBody entirePostDto : EntirePostDto): EntirePostEntity {
-        return boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
+    fun registPost(@RequestBody entirePostDto : EntirePostDto){
+        boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
     }
 
     @PostMapping("/registComment")
-    fun registComment(@RequestBody entireCommentDto : EntireCommentDto) : EntireCommentEntity{
-        return boardService.saveComment(entireCommentDto)
+    fun registComment(@RequestBody entireCommentDto : EntireCommentDto){
+        boardService.saveComment(entireCommentDto)
     }
 
     @PostMapping("/saveScrapLike")
@@ -52,8 +52,8 @@ class BoardController {
     }
 
     @PostMapping("/editPost")
-    fun editPost(@RequestBody editPostDto : EntirePostDto) : EntirePostEntity{
-        return boardServiceEdit.editPost(editPostDto)
+    fun editPost(@RequestBody editPostDto : EntirePostDto){
+        boardServiceEdit.editPost(editPostDto)
     }
 
     @PostMapping("/editComment")
@@ -61,13 +61,15 @@ class BoardController {
         boardServiceEdit.editComment(editCommentDto)
     }
 
-    @PostMapping("/deleteComment")
-    fun deleteComment(@RequestBody deleteCommentDto: DeleteCommentDto){
+    @GetMapping("/deleteComment")
+    fun deleteComment(@RequestParam commentId : Long, @RequestParam postId: Long){
+        val deleteCommentDto = DeleteCommentDto(commentId, postId)
         boardServiceEdit.deleteComment(deleteCommentDto)
     }
 
-    @PostMapping("/deletePost")
-    fun deletePost(@RequestBody deletePostDto: DeletePostDto){
+    @GetMapping("/deletePost")
+    fun deletePost(@RequestParam postId: Long){
+        val deletePostDto = DeletePostDto(postId)
         boardServiceEdit.deletePost(deletePostDto)
     }
 
@@ -76,7 +78,7 @@ class BoardController {
         return boardPrintService.printEntirePost(pageable)
     }
 
-    @GetMapping("/printCommentByPost")
+    @GetMapping("/printComment")
     fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentEntity>{
         return boardPrintService.printComment(postId)
     }
