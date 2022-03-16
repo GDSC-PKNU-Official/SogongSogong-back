@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
-import sogong.sogongSpring.dto.hashtag.PostHashtagDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.entity.*
 import sogong.sogongSpring.repository.*
@@ -21,19 +20,15 @@ class BoardService {
     @Autowired //댓글을 저장하려는 변수
     private lateinit var entireCommentRepository: EntireCommentRepository
     @Autowired
-    private lateinit var hotPostRepository: HotPostRepository
-    @Autowired
-    private lateinit var bestPostRepository: BestPostRepository
-    @Autowired
     private lateinit var scrapLikeRepository: ScrapLikeRepository
 
 
     //MutableList<EntirePostEntity>로 반환하면 Json 형태로 잘 돌려보내줘요.
     @Transactional
-    fun saveBoard(entirePostDto: EntirePostDto): EntirePostEntity {
+    fun saveBoard(entirePostDto: EntirePostDto){
 
         //Board DTO에 저장된 userid를 User Repository에 조회해보자!
-        val postUserId = userLoginRepository.findById(entirePostDto.userid)
+        val postUserId = userLoginRepository.findById(entirePostDto.userId)
 
         //userid가 조회가 될 때!
         if (postUserId.isPresent) {
@@ -44,11 +39,10 @@ class BoardService {
                 content = entirePostDto.content,
                 date = LocalDateTime.now(),
                 picture = entirePostDto.picture,
-                countComment = entirePostDto.countcomment,
-                countLike = entirePostDto.countlike
+                countComment = entirePostDto.countComment,
+                countLike = entirePostDto.countLike
             )
             entirePostRepository.save(entirePostEntity) //자 이제 Repository에 저장해주세요
-            return entirePostEntity //전체 글 조회해주세요^^
         }
         //userid가 조회가 되지 않을 때!
         else throw java.lang.IllegalArgumentException("Userid Error!!!!") //응 userid 잘못된거니까 던져
@@ -57,9 +51,9 @@ class BoardService {
     //////////////////////////////////////////////////////////////
 
     @Transactional
-    fun saveComment(entireCommentDto: EntireCommentDto) : EntireCommentEntity{
-        val commentUserId = userLoginRepository.findById(entireCommentDto.userid)
-        val commentPostId = entirePostRepository.findById(entireCommentDto.postid)
+    fun saveComment(entireCommentDto: EntireCommentDto){
+        val commentUserId = userLoginRepository.findById(entireCommentDto.userId)
+        val commentPostId = entirePostRepository.findById(entireCommentDto.postId)
 
         if(commentUserId.isPresent and commentPostId.isPresent){
             val entireCommentEntity = EntireCommentEntity(
@@ -72,13 +66,6 @@ class BoardService {
             //게시글의 댓글 수가 1씩 증가하도록 저장.
             commentPostId.get().countComment = commentPostId.get().countComment + 1
             entirePostRepository.save(commentPostId.get())
-
-            if (commentPostId.get().countComment == 10){
-                val hotPostEntity = HotPostEntity(postId=commentPostId.get(), date=LocalDateTime.now())
-                hotPostRepository.save(hotPostEntity)
-            }
-
-            return entireCommentEntity
         }
         else throw java.lang.IllegalArgumentException("Userid & Postid Error!!!")
     }
@@ -87,8 +74,8 @@ class BoardService {
 
     @Transactional
     fun saveScrapLike(scrapLikeDto: ScrapLikeDto){
-        val scrapLikeUserId = userLoginRepository.findById(scrapLikeDto.userid)
-        val scrapLikePostId = entirePostRepository.findById(scrapLikeDto.postid)
+        val scrapLikeUserId = userLoginRepository.findById(scrapLikeDto.userId)
+        val scrapLikePostId = entirePostRepository.findById(scrapLikeDto.postId)
 
         //usreid와 postid가 존재한다면
         if (scrapLikeUserId.isPresent and scrapLikePostId.isPresent) {
@@ -109,12 +96,6 @@ class BoardService {
                 if (scrapLikeDto.category) {
                     scrapLikePostId.get().countLike = countLike + 1
                     entirePostRepository.save(scrapLikePostId.get())
-
-                    //좋아요가 10개 될 때 best 게시글에 저장.
-                    if(scrapLikePostId.get().countLike == 10){
-                        val bestPostEntity = BestPostEntity(postId=scrapLikePostId.get(), date= LocalDateTime.now())
-                        bestPostRepository.save(bestPostEntity)
-                    }
                 }
             }
             //스크랩, 좋아요가 있으면 삭제

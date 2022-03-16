@@ -1,5 +1,6 @@
 package sogong.sogongSpring.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
 import javax.persistence.*
 
@@ -13,13 +14,13 @@ data class UserHashtagEntity(
     val userHashId : Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name="userId", nullable = false)
     val userId : UserLoginEntity,
 
     @Column(nullable = false)
-    var groupId : Long? = null,
+    val groupId : Long,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="hashId", nullable = false)
-    var hashId : HashtagDbEntity
+    @Column(nullable = false)
+    var hashName : String
 )

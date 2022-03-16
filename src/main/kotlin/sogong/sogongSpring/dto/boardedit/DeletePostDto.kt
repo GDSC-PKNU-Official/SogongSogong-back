@@ -1,5 +1,5 @@
 package sogong.sogongSpring.dto.boardedit
 
 data class DeletePostDto(
-    val postid : Long
+    val postId : Long
 ):java.io.Serializable
