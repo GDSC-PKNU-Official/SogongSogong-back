@@ -7,8 +7,6 @@ import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
-import sogong.sogongSpring.dto.boardedit.DeletePostDto
-import sogong.sogongSpring.entity.EntirePostEntity
 import sogong.sogongSpring.repository.EntireCommentRepository
 import sogong.sogongSpring.repository.EntirePostRepository
 import sogong.sogongSpring.repository.ScrapLikeRepository
@@ -54,10 +52,8 @@ class BoardEditService {
 
     ///////////////////////////////////////////////////////////////
     @Transactional
-    fun editPost(editPostDto : EntirePostDto){
-        //Dto를 재활용하는 바람에 글 생성될 때 null 허용하던 postid가 여기선 not null로 처리해야되는...
-        //Dto 하나 더 만들까 생각 중.
-        val editPost = entirePostRepository.findById(editPostDto.postId!!).get()
+    fun editPost(postId:Long, editPostDto:EntirePostDto){
+        val editPost = entirePostRepository.findById(postId).get()
 
         editPost.subject = editPostDto.subject
         editPost.content = editPostDto.content
@@ -67,8 +63,8 @@ class BoardEditService {
     }
 
     @Transactional
-    fun editComment(editCommentDto : EntireCommentDto){
-        val editComment = entireCommentRepository.findById(editCommentDto.commentId!!).get()
+    fun editComment(commentId:Long, editCommentDto:EntireCommentDto){
+        val editComment = entireCommentRepository.findById(commentId).get()
         editComment.date = LocalDateTime.now()
         editComment.content = editCommentDto.content
         //공백 content는 어떻게 처리?
@@ -85,16 +81,16 @@ class BoardEditService {
     }
 
     @Transactional
-    fun deletePost(deletePostDto: DeletePostDto){
+    fun deletePost(postId:Long){
         //==========hotpost 에서도 삭제해야함 참고=============//
-        val deletePost = entirePostRepository.findById(deletePostDto.postId)
+        val deletePost = entirePostRepository.findById(postId)
         if (deletePost.isPresent) {
             val deleteScrapLike = scrapLikeRepository.findByPostId(deletePost.get())
             val deletecomment = entireCommentRepository.findByPostId(deletePost.get())
 
             deleteScrapLike.forEach { i -> scrapLikeRepository.delete(i) }
             deletecomment.forEach { i -> entireCommentRepository.delete(i) }
-            entirePostRepository.deleteById(deletePostDto.postId)
+            entirePostRepository.deleteById(postId)
         }
         else throw java.lang.IllegalArgumentException("PostId Error!!")
     }

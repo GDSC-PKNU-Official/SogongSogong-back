@@ -38,9 +38,7 @@ class BoardService {
                 subject = entirePostDto.subject, //나머지들은 그냥 있는 그대로 넣기.
                 content = entirePostDto.content,
                 date = LocalDateTime.now(),
-                picture = entirePostDto.picture,
-                countComment = entirePostDto.countComment,
-                countLike = entirePostDto.countLike
+                picture = entirePostDto.picture
             )
             entirePostRepository.save(entirePostEntity) //자 이제 Repository에 저장해주세요
         }

@@ -2,13 +2,14 @@ package sogong.sogongSpring.controller
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
-import sogong.sogongSpring.dto.boardedit.DeletePostDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
 import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
@@ -31,76 +32,77 @@ class BoardController {
         this.boardPrintService = boardPrintService
     }
 
-    @PostMapping("/registPost")
+    @PostMapping("/post")
     fun registPost(@RequestBody entirePostDto : EntirePostDto){
         boardService.saveBoard(entirePostDto) //바로 Service로 갑니다^^
     }
 
-    @PostMapping("/registComment")
+    @PostMapping("/comment")
     fun registComment(@RequestBody entireCommentDto : EntireCommentDto){
         boardService.saveComment(entireCommentDto)
     }
 
-    @PostMapping("/saveScrapLike")
+    @PostMapping("/scrap-like")
     fun registScrapLike(@RequestBody scrapLikeDto: ScrapLikeDto){
         boardService.saveScrapLike(scrapLikeDto)
     }
 
-    @PostMapping(value = ["/editPostAuth", "/editCommentAuth"])
-    fun editAuth(@RequestBody editPostCommentDto: EditPostCommentAuthDto) : Boolean{
-        return boardServiceEdit.editAuth(editPostCommentDto)
+   @GetMapping(value = ["/post-auth", "/comment-auth"])
+    fun editAuth(@RequestParam("user-id") userId:Long, @RequestParam("post-id") postid:Long,
+                 @RequestParam("comment-id") commentid:Long?=null) : Boolean{
+        return boardServiceEdit.editAuth(EditPostCommentAuthDto(
+            postId=postid, userId=userId, commentId=commentid))
     }
 
-    @PostMapping("/editPost")
-    fun editPost(@RequestBody editPostDto : EntirePostDto){
-        boardServiceEdit.editPost(editPostDto)
+    @PutMapping("/post/{postId}")
+    fun editPost(@PathVariable postId:Long, @RequestBody editPostDto:EntirePostDto){
+        boardServiceEdit.editPost(postId, editPostDto)
     }
 
-    @PostMapping("/editComment")
-    fun editComment(@RequestBody editCommentDto : EntireCommentDto) {
-        boardServiceEdit.editComment(editCommentDto)
+    @PutMapping("/comment/{commentId}")
+    fun editComment(@PathVariable commentId:Long, @RequestBody editCommentDto:EntireCommentDto) {
+        boardServiceEdit.editComment(commentId, editCommentDto)
     }
 
-    @GetMapping("/deleteComment")
-    fun deleteComment(@RequestParam commentId : Long, @RequestParam postId: Long){
+    @DeleteMapping("/comment/{commentId}")
+    fun deleteComment(@PathVariable commentId : Long, @RequestParam("post-id") postId: Long){
         val deleteCommentDto = DeleteCommentDto(commentId, postId)
         boardServiceEdit.deleteComment(deleteCommentDto)
     }
 
-    @GetMapping("/deletePost")
-    fun deletePost(@RequestParam postId: Long){
-        val deletePostDto = DeletePostDto(postId)
-        boardServiceEdit.deletePost(deletePostDto)
+    @DeleteMapping("/post/{postId}")
+    fun deletePost(@PathVariable postId: Long){
+        boardServiceEdit.deletePost(postId)
     }
 
-    @GetMapping("/printEntirePost")
-    fun printPost(pageable: Pageable) : Page<EntirePostEntity> {
+    @GetMapping("/entire-post")
+    fun printPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : Page<EntirePostEntity> {
         return boardPrintService.printEntirePost(pageable)
     }
 
-    @GetMapping("/printOnePost")
-    fun printOnePost(postId:Long) : EntirePostEntity{
+    @GetMapping("/one-post/{postId}")
+    fun printOnePost(@PathVariable postId:Long) : EntirePostEntity{
         return boardPrintService.printOnePost(postId)
     }
 
-    @GetMapping("/printComment")
-    fun printComment(@RequestParam("postId") postId : Long): MutableList<EntireCommentEntity>{
+    @GetMapping("/comment/{postId}")
+    fun printComment(@PathVariable postId:Long) : MutableList<EntireCommentEntity>{
         return boardPrintService.printComment(postId)
     }
 
-    @GetMapping("/printScrapLike")
-    fun printScrapLike(@RequestParam("userId") userId:Long,
-                       @RequestParam("scrapLike") scrapLike:Boolean) : MutableList<PrintEntirePostDto>{
+    @GetMapping("/scrap-like")
+    fun printScrapLike(@RequestParam("user-id") userId:Long,
+                       @RequestParam("scrap-like") scrapLike:Boolean) : MutableList<PrintEntirePostDto>{
         return boardPrintService.printScrapLike(userId, scrapLike)
     }
 
-    @GetMapping("/printHotPost")
-    fun printHotPost(pageable: Pageable) : List<EntirePostEntity>{
+    @GetMapping("/hot-post")
+    fun printHotPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : List<EntirePostEntity>{
         return boardPrintService.printHotPost(pageable).content //content만 적용
     }
 
-    @GetMapping("/printBestPost")
-    fun printBestPost(pageable: Pageable) : Page<EntirePostEntity>{
+    @GetMapping("/best-post")
+    fun printBestPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : Page<EntirePostEntity>{
         return boardPrintService.printBestPost(pageable) //page 전체만 적용
     }
 }
