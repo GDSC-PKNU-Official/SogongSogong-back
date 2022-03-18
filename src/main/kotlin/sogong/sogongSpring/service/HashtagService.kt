@@ -84,6 +84,20 @@ class HashtagService {
         }
     }
 
+    @Transactional
+    fun editPostHashtag(postHashtagDto: PostHashtagDto){
+        val original = postHashtagRepository.findAllByPost(postHashtagDto.postId)
+        val hashes = hashtagDbRepository.findByHashNames(postHashtagDto.hashName)
+        for (i:Int in 0 until original.size)
+            postHashtagRepository.save(
+                PostHashtagEntity(
+                    postHashId = original[i].postHashId,
+                    postId = original[i].postId,
+                    hashId = hashes[i]
+                )
+            )
+
+    }
 
     @Transactional
     fun searchOrPost(hashtags: List<String>) : List<EntirePostEntity> {

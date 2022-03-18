@@ -10,40 +10,40 @@ import sogong.sogongSpring.service.HashtagService
 
 @RestController
 @RequestMapping("/hashtag")
-class HashtagController {
-    var hashtagService : HashtagService
+class HashtagController (var hashtagService: HashtagService){
 
-    constructor(hashtagService: HashtagService) {
-        this.hashtagService = hashtagService
-    }
-
-    @PostMapping("/registPostHashtag")
+    @PostMapping("/post")
     fun registPostHashtag(@RequestBody postHashtagDto: PostHashtagDto){
         hashtagService.savePostHashtag(postHashtagDto)
     }
 
-    @PostMapping("/registUserHashtag")
+    @PostMapping("/user")
     fun saveUserHashtag(@RequestBody userHashTagDto: UserHashTagDto){
         hashtagService.saveUserHashtag(userHashTagDto)
     }
 
-    @PostMapping("/editUserHashtag")
+    @PutMapping("/user")
     fun editUserHashtag(@RequestBody userHashTagDto: UserHashTagDto){
         hashtagService.editUserHashtag(userHashTagDto)
     }
 
-    @GetMapping("/orSearchHashtag")
+    @PutMapping("/post")
+    fun editPostHashtag(@RequestBody postHashtagDto: PostHashtagDto){
+        hashtagService.editPostHashtag(postHashtagDto)
+    }
+
+    @GetMapping("/or-search")
     fun searchPost(@RequestParam hashtag: List<String>) : List<EntirePostEntity>{
         return hashtagService.searchOrPost(hashtag)
     }
 
-    @GetMapping("/printPostHashtag")
-    fun printPostHashtag(@RequestParam postId : Long) : List<String>{
+    @GetMapping("/post/{postId}")
+    fun printPostHashtag(@PathVariable postId : Long) : List<String>{
         return hashtagService.printPostHashtag(postId)
     }
 
-    @GetMapping("/printUserHashtag")
-    fun printUserHashtag(@RequestParam userId:Long, @RequestParam groupId:Long) : List<UserHashtagEntity>{
+    @GetMapping("/user/{userId}")
+    fun printUserHashtag(@PathVariable userId:Long, @RequestParam("group-id") groupId:Long) : List<UserHashtagEntity>{
         return hashtagService.printUserHashtag(userId, groupId)
     }
 

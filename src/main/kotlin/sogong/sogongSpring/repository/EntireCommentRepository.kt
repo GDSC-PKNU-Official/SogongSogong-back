@@ -13,6 +13,6 @@ interface EntireCommentRepository : JpaRepository<EntireCommentEntity, Long> {
     fun findByCommentIdAndUserIdAndPostId(commentId:Long, userId:UserLoginEntity, postId:EntirePostEntity) : List<EntireCommentEntity>
     fun findByPostId(postId:EntirePostEntity) : List<EntireCommentEntity>
 
-    @Query(value = "select * from entire_comment where postId = :postId", nativeQuery = true)
+    @Query(value = "select * from ENTIRE_COMMENT where postId = :postId", nativeQuery = true)
     fun selectPost(@Param(value="postId") postId : Long) : MutableList<EntireCommentEntity>
 }

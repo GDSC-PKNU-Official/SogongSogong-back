@@ -1,6 +1,7 @@
 package sogong.sogongSpring.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.Banner.Mode
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -10,6 +11,7 @@ import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
 import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
+import sogong.sogongSpring.entity.ScrapLikeEntity
 import sogong.sogongSpring.repository.EntireCommentRepository
 import sogong.sogongSpring.repository.EntirePostRepository
 import sogong.sogongSpring.repository.ScrapLikeRepository
@@ -38,6 +40,13 @@ class BoardPrintService {
 //        return postList
         val result = entirePostRepository.findAll(pageable)
         return result
+    }
+
+    @RequestMapping
+    fun printOnePost(postId:Long) : EntirePostEntity{
+        val post = entirePostRepository.findById(postId)
+        if (post.isEmpty) throw IllegalArgumentException("PostId Error!!!")
+        else return post.get()
     }
 
     //DTO로 바꿀것!!!
