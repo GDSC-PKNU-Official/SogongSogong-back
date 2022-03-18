@@ -13,9 +13,9 @@ import sogong.sogongSpring.entity.UserLoginEntity
 interface EntirePostRepository : JpaRepository<EntirePostEntity, Long> {
     fun findByPostIdAndUserId(postId:Long, userId:UserLoginEntity):MutableList<EntirePostEntity>
 
-    @Query(value = "select * from entire_post where countComment >= :countComment", nativeQuery = true)
+    @Query(value = "select * from ENTIRE_POST where countComment >= :countComment", nativeQuery = true)
     fun findHotPost(@Param(value="countComment") countComment : Int, pageable: Pageable) : Page<EntirePostEntity>
 
-    @Query(value = "select * from entire_post where countLike >= :countLike", nativeQuery = true)
+    @Query(value = "select * from ENTIRE_POST where countLike >= :countLike", nativeQuery = true)
     fun findBestPost(@Param(value="countLike") countLike : Int, pageable: Pageable) : Page<EntirePostEntity>
 }

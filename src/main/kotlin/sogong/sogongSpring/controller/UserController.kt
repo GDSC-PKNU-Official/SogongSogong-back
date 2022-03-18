@@ -11,12 +11,7 @@ import java.io.IOException
 
 @RestController
 @RequestMapping("/user")
-class UserController {
-
-    var userService : UserService
-    constructor(userService: UserService){
-        this.userService = userService
-    }
+class UserController (var userService: UserService) {
 
     @GetMapping("/business")
     @Throws(IOException::class)

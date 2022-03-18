@@ -21,16 +21,7 @@ import sogong.sogongSpring.service.BoardPrintService
 @RestController // JSON 형태로 결과 반환해줌!
 //@RequiredArgsConstructor // final 객체를 Constructor Injection 해준다! (Autowire 역할)
 @RequestMapping("/board")
-class BoardController {
-    var boardService : BoardService
-    var boardServiceEdit : BoardEditService
-    var boardPrintService : BoardPrintService
-
-    constructor(boardService: BoardService, boardServiceEdit: BoardEditService, boardPrintService: BoardPrintService){
-        this.boardService = boardService
-        this.boardServiceEdit = boardServiceEdit
-        this.boardPrintService = boardPrintService
-    }
+class BoardController (var boardService: BoardService, var boardServiceEdit: BoardEditService, var boardPrintService : BoardPrintService){
 
     @PostMapping("/post")
     fun registPost(@RequestBody entirePostDto : EntirePostDto){
@@ -85,8 +76,8 @@ class BoardController {
         return boardPrintService.printOnePost(postId)
     }
 
-    @GetMapping("/comment/{postId}")
-    fun printComment(@PathVariable postId:Long) : MutableList<EntireCommentEntity>{
+    @GetMapping("/comment")
+    fun printComment(@RequestParam("post-id") postId:Long) : MutableList<EntireCommentEntity>{
         return boardPrintService.printComment(postId)
     }
 

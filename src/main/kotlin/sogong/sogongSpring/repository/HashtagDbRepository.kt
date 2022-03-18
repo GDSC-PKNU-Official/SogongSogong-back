@@ -8,6 +8,6 @@ import sogong.sogongSpring.entity.HashtagDbEntity
 
 @Repository
 interface HashtagDbRepository : JpaRepository<HashtagDbEntity, Long> {
-    @Query(value = "select * from hashtag_db as h where h.hashName in (:hashName)", nativeQuery = true)
+    @Query(value = "select * from HASHTAG_DB as h where h.hashName in (:hashName)", nativeQuery = true)
     fun findByHashNames(@Param("hashName") hashName:List<String>) : List<HashtagDbEntity>
 }

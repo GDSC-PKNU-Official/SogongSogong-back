@@ -10,12 +10,7 @@ import sogong.sogongSpring.service.HashtagService
 
 @RestController
 @RequestMapping("/hashtag")
-class HashtagController {
-    var hashtagService : HashtagService
-
-    constructor(hashtagService: HashtagService) {
-        this.hashtagService = hashtagService
-    }
+class HashtagController (var hashtagService: HashtagService){
 
     @PostMapping("/post")
     fun registPostHashtag(@RequestBody postHashtagDto: PostHashtagDto){
