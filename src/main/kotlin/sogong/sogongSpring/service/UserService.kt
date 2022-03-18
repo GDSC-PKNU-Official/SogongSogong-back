@@ -8,9 +8,11 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.transaction.Transactional
 
 @Service
 class UserService {
+    @Transactional
     fun validateBusiness(businessAuthDto:BusinessAuthDto) : Boolean{
         val urlStr = "http://api.odcloud.kr/api/nts-businessman/v1/validate?serviceKey=fjtSID3mB9LSl73IcoAJ4F0wrHJy0Q1gF6uixrxW5mJxTdDiTBxRtsgqysKBtjt6YZlPr84Mmj2ernNmKTRWAg=="
         val url = URL(urlStr)
