@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 data class PrintEntirePostDto(
+    var scrapId : Long,
     var postId : Long,
     var userId : Long,
     var subject : String,

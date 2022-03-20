@@ -19,7 +19,6 @@ import sogong.sogongSpring.service.BoardPrintService
 
 
 @RestController // JSON 형태로 결과 반환해줌!
-//@RequiredArgsConstructor // final 객체를 Constructor Injection 해준다! (Autowire 역할)
 @RequestMapping("/board")
 class BoardController (var boardService: BoardService, var boardServiceEdit: BoardEditService, var boardPrintService : BoardPrintService){
 
@@ -67,8 +66,8 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     }
 
     @GetMapping("/entire-post")
-    fun printPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : Page<EntirePostEntity> {
-        return boardPrintService.printEntirePost(pageable)
+    fun printPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
+        return boardPrintService.printEntirePost(lastPost)
     }
 
     @GetMapping("/one-post/{postId}")
@@ -77,23 +76,25 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     }
 
     @GetMapping("/comment")
-    fun printComment(@RequestParam("post-id") postId:Long) : MutableList<EntireCommentEntity>{
-        return boardPrintService.printComment(postId)
+    fun printComment(@RequestParam("post-id") postId:Long,
+                     @RequestParam("last-comment") lastCom:Long?=null):List<EntireCommentEntity>{
+        return boardPrintService.printComment(postId, lastCom)
     }
 
     @GetMapping("/scrap-like")
     fun printScrapLike(@RequestParam("user-id") userId:Long,
-                       @RequestParam("scrap-like") scrapLike:Boolean) : MutableList<PrintEntirePostDto>{
-        return boardPrintService.printScrapLike(userId, scrapLike)
+                       @RequestParam("scrap-like") scrapLike:Boolean,
+                       @RequestParam("last-scrap") lastScrap:Long?=null) : List<PrintEntirePostDto>{
+        return boardPrintService.printScrapLike(userId, scrapLike, lastScrap)
     }
 
     @GetMapping("/hot-post")
-    fun printHotPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : List<EntirePostEntity>{
-        return boardPrintService.printHotPost(pageable).content //content만 적용
+    fun printHotPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
+        return boardPrintService.printHotPost(lastPost)
     }
 
     @GetMapping("/best-post")
-    fun printBestPost(@PageableDefault(size=20, sort=["postId"], direction= Sort.Direction.DESC) pageable: Pageable) : Page<EntirePostEntity>{
-        return boardPrintService.printBestPost(pageable) //page 전체만 적용
+    fun printBestPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
+        return boardPrintService.printBestPost(lastPost)
     }
 }
