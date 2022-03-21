@@ -1,13 +1,8 @@
 package sogong.sogongSpring.service
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.Banner.Mode
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestMapping
-import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
 import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
@@ -37,9 +32,14 @@ class BoardPrintService {
 
     @RequestMapping
     fun printOnePost(postId:Long) : EntirePostEntity{
-        val post = entirePostRepository.findById(postId)
-        if (post.isEmpty) throw IllegalArgumentException("PostId Error!!!")
-        else return post.get()
+        runCatching{
+            entirePostRepository.findById(postId).get()
+        }.onSuccess {
+            return it
+        }.onFailure {
+            throw PostIdException(postId)
+        }
+        throw IllegalStateException("Server Error!")
     }
 
     //DTO로 바꿀것!!!
@@ -53,23 +53,29 @@ class BoardPrintService {
     @RequestMapping
     fun printScrapLike(userId:Long, scrapLike:Boolean, lastScrap:Long?):List<PrintEntirePostDto>{
         var scrapLikeList : List<PrintEntirePostDto>
-        val findUser = userLoginRepository.findById(userId) //exception용
-        var findScrapLike : List<ScrapLikeEntity> =
-            if(lastScrap==null) scrapLikeRepository.findByUserIdAndCategory(userId, scrapLike)
-            else scrapLikeRepository.findByUserIdAndCategoryAndCommentId(userId, scrapLike, lastScrap)
+        runCatching{
+            userLoginRepository.findById(userId)
+        }.onSuccess {
+            var findScrapLike: List<ScrapLikeEntity> =
+                if (lastScrap == null) scrapLikeRepository.findByUserIdAndCategory(userId, scrapLike)
+                else scrapLikeRepository.findByUserIdAndCategoryAndCommentId(userId, scrapLike, lastScrap)
 
-        scrapLikeList = findScrapLike.map{ f ->
-            PrintEntirePostDto(
-                f.scrapId ?: 0L,
-                f.postId.postId ?: 0L,
-                f.postId.userId.userId ?: 0L,
-                f.postId.subject,
-                f.postId.date,
-                f.postId.countComment,
-                f.postId.countLike)
+            scrapLikeList = findScrapLike.map { f ->
+                PrintEntirePostDto(
+                    f.scrapId ?: 0L,
+                    f.postId.postId ?: 0L,
+                    f.postId.userId.userId ?: 0L,
+                    f.postId.subject,
+                    f.postId.date,
+                    f.postId.countComment,
+                    f.postId.countLike
+                )
+            }
+            return scrapLikeList
+        }.onFailure {
+            throw UserIdException(userId)
         }
-
-        return scrapLikeList
+        throw IllegalStateException("Server Error!")
     }
 
     //N+1 occurred
