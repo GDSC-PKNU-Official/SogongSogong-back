@@ -56,7 +56,7 @@ class BoardPrintService {
         runCatching{
             userLoginRepository.findById(userId)
         }.onSuccess {
-            var findScrapLike: List<ScrapLikeEntity> =
+            val findScrapLike: List<ScrapLikeEntity> =
                 if (lastScrap == null) scrapLikeRepository.findByUserIdAndCategory(userId, scrapLike)
                 else scrapLikeRepository.findByUserIdAndCategoryAndCommentId(userId, scrapLike, lastScrap)
 
@@ -81,7 +81,7 @@ class BoardPrintService {
     //N+1 occurred
     @RequestMapping
     fun printHotPost(lastPost: Long?) : List<EntirePostEntity>{
-        var hotPost : List<EntirePostEntity> =
+        val hotPost : List<EntirePostEntity> =
             if (lastPost == null) entirePostRepository.findHotPost(10)
             else entirePostRepository.findHotPostByPost(10, lastPost)
         return hotPost
@@ -90,7 +90,7 @@ class BoardPrintService {
     //N+1 occurred
     @RequestMapping
     fun printBestPost(lastPost: Long?) : List<EntirePostEntity>{
-        var bestPost : List<EntirePostEntity> =
+        val bestPost : List<EntirePostEntity> =
             if (lastPost == null) entirePostRepository.findHotPost(10)
             else entirePostRepository.findHotPostByPost(10, lastPost)
         return bestPost
