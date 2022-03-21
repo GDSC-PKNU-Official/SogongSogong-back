@@ -10,6 +10,8 @@ import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
+import sogong.sogongSpring.dto.boardedit.EditCommentDto
+import sogong.sogongSpring.dto.boardedit.EditPostDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
 import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
@@ -45,12 +47,12 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     }
 
     @PutMapping("/post/{postId}")
-    fun editPost(@PathVariable postId:Long, @RequestBody editPostDto:EntirePostDto){
+    fun editPost(@PathVariable postId:Long, @RequestBody editPostDto:EditPostDto){
         boardServiceEdit.editPost(postId, editPostDto)
     }
 
     @PutMapping("/comment/{commentId}")
-    fun editComment(@PathVariable commentId:Long, @RequestBody editCommentDto:EntireCommentDto) {
+    fun editComment(@PathVariable commentId:Long, @RequestBody editCommentDto:EditCommentDto) {
         boardServiceEdit.editComment(commentId, editCommentDto)
     }
 
