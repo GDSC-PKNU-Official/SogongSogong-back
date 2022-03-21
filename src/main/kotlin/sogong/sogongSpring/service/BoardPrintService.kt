@@ -30,16 +30,9 @@ class BoardPrintService {
     private lateinit var scrapLikeRepository: ScrapLikeRepository
 
     @RequestMapping
-    fun printEntirePost(pageable: Pageable) : Page<EntirePostEntity> {
-//        val postList : MutableList<PrintEntirePostDto> = ArrayList()
-//        val entirePost = entirePostRepository.findAll()
-//        entirePost.forEach{ i ->
-//            postList.add(PrintEntirePostDto(i.postId!!, i.userId.userId!!, i.subject
-//                , i.date, i.countComment, i.countLike))
-//        }
-//        return postList
-        val result = entirePostRepository.findAll(pageable)
-        return result
+    fun printEntirePost(lastPost:Long?) : List<EntirePostEntity> {
+        return if(lastPost==null) entirePostRepository.findEntirePost()
+        else entirePostRepository.findEntirePostByLastId(lastPost)
     }
 
     @RequestMapping
@@ -51,48 +44,49 @@ class BoardPrintService {
 
     //DTO로 바꿀것!!!
     @RequestMapping
-    fun printComment(postId:Long):MutableList<EntireCommentEntity>{
-//        val commentList : MutableList<EntireCommentDto> = ArrayList()
-//        val findPost = entirePostRepository.findById(postId)
-//        val findComment = entireCommentRepository.findByPostId(findPost.get())
-//
-//        findComment.forEach { i ->
-//            commentList.add(
-//                EntireCommentDto(i.commentId, i.userId.userId!!,
-//                i.postId.postId!!, i.date, i.content)
-//            )
-//        }
-//        return commentList
-        return entireCommentRepository.selectPost(postId)
+    fun printComment(postId:Long, lastCom:Long?):List<EntireCommentEntity>{
+        return if(lastCom==null) entireCommentRepository.selectPost(postId)
+        else entireCommentRepository.selectPostByCommentId(postId, lastCom)
     }
 
 
     @RequestMapping
-    fun printScrapLike(userId:Long, scrapLike:Boolean):MutableList<PrintEntirePostDto>{
-        val scrapLikeList : MutableList<PrintEntirePostDto> = ArrayList()
-        val findUser = userLoginRepository.findById(userId)
-        val findScrapLike = scrapLikeRepository.findByUserIdAndCategory(findUser.get(), scrapLike)
+    fun printScrapLike(userId:Long, scrapLike:Boolean, lastScrap:Long?):List<PrintEntirePostDto>{
+        var scrapLikeList : List<PrintEntirePostDto>
+        val findUser = userLoginRepository.findById(userId) //exception용
+        var findScrapLike : List<ScrapLikeEntity> =
+            if(lastScrap==null) scrapLikeRepository.findByUserIdAndCategory(userId, scrapLike)
+            else scrapLikeRepository.findByUserIdAndCategoryAndCommentId(userId, scrapLike, lastScrap)
 
-        findScrapLike.forEach { i ->
-            scrapLikeList.add(
-                PrintEntirePostDto(i.postId.postId!!, i.postId.userId.userId!!,
-                    i.postId.subject, i.postId.date, i.postId.countComment, i.postId.countLike)
-            )
+        scrapLikeList = findScrapLike.map{ f ->
+            PrintEntirePostDto(
+                f.scrapId ?: 0L,
+                f.postId.postId ?: 0L,
+                f.postId.userId.userId ?: 0L,
+                f.postId.subject,
+                f.postId.date,
+                f.postId.countComment,
+                f.postId.countLike)
         }
+
         return scrapLikeList
     }
 
     //N+1 occurred
     @RequestMapping
-    fun printHotPost(pageable: Pageable) : Page<EntirePostEntity>{
-        val hotPost = entirePostRepository.findHotPost(10, pageable)
+    fun printHotPost(lastPost: Long?) : List<EntirePostEntity>{
+        var hotPost : List<EntirePostEntity> =
+            if (lastPost == null) entirePostRepository.findHotPost(10)
+            else entirePostRepository.findHotPostByPost(10, lastPost)
         return hotPost
     }
 
     //N+1 occurred
     @RequestMapping
-    fun printBestPost(pageable: Pageable) : Page<EntirePostEntity>{
-        val bestPost = entirePostRepository.findBestPost(10, pageable)
+    fun printBestPost(lastPost: Long?) : List<EntirePostEntity>{
+        var bestPost : List<EntirePostEntity> =
+            if (lastPost == null) entirePostRepository.findHotPost(10)
+            else entirePostRepository.findHotPostByPost(10, lastPost)
         return bestPost
     }
 }
