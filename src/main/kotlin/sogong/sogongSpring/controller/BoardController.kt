@@ -1,15 +1,13 @@
 package sogong.sogongSpring.controller
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
-import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
 import sogong.sogongSpring.dto.board.EntirePostDto
 import sogong.sogongSpring.dto.board.ScrapLikeDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
+import sogong.sogongSpring.dto.boardedit.EditCommentDto
+import sogong.sogongSpring.dto.boardedit.EditPostDto
 import sogong.sogongSpring.dto.boardprint.PrintEntirePostDto
 import sogong.sogongSpring.entity.EntireCommentEntity
 import sogong.sogongSpring.entity.EntirePostEntity
@@ -34,7 +32,7 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
 
     @PostMapping("/scrap-like")
     fun registScrapLike(@RequestBody scrapLikeDto: ScrapLikeDto){
-        boardService.saveScrapLike(scrapLikeDto)
+        boardService.saveOrDeleteScrapLike(scrapLikeDto)
     }
 
    @GetMapping(value = ["/post-auth", "/comment-auth"])
@@ -45,12 +43,12 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     }
 
     @PutMapping("/post/{postId}")
-    fun editPost(@PathVariable postId:Long, @RequestBody editPostDto:EntirePostDto){
+    fun editPost(@PathVariable postId:Long, @RequestBody editPostDto:EditPostDto){
         boardServiceEdit.editPost(postId, editPostDto)
     }
 
     @PutMapping("/comment/{commentId}")
-    fun editComment(@PathVariable commentId:Long, @RequestBody editCommentDto:EntireCommentDto) {
+    fun editComment(@PathVariable commentId:Long, @RequestBody editCommentDto:EditCommentDto) {
         boardServiceEdit.editComment(commentId, editCommentDto)
     }
 

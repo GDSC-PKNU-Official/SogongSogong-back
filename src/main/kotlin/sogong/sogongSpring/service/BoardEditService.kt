@@ -4,15 +4,17 @@ package sogong.sogongSpring.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
-import sogong.sogongSpring.dto.board.EntireCommentDto
-import sogong.sogongSpring.dto.board.EntirePostDto
 import sogong.sogongSpring.dto.boardedit.DeleteCommentDto
+import sogong.sogongSpring.dto.boardedit.EditCommentDto
+import sogong.sogongSpring.dto.boardedit.EditPostDto
+import sogong.sogongSpring.entity.EntirePostEntity
 import sogong.sogongSpring.repository.EntireCommentRepository
 import sogong.sogongSpring.repository.EntirePostRepository
 import sogong.sogongSpring.repository.ScrapLikeRepository
 import sogong.sogongSpring.repository.UserLoginRepository
 import java.time.LocalDateTime
 import javax.transaction.Transactional
+
 
 
 @Service
@@ -26,72 +28,93 @@ class BoardEditService {
     @Autowired
     private lateinit var scrapLikeRepository: ScrapLikeRepository
 
-    ///////////////////////////////////////////////////////////////
     @Transactional
     fun editAuth(editPostCommentAuthDto: EditPostCommentAuthDto) : Boolean{
-        val userAuth = userLoginRepository.findById(editPostCommentAuthDto.userId) //기본적으로 userid부터 조회해야 함
-
-        if(userAuth.isPresent){
-            if(editPostCommentAuthDto.commentId == null) { //글 수정 권한 조회일 경우
-                val postAuth = entirePostRepository.findByPostIdAndUserId(editPostCommentAuthDto.postId, userAuth.get())
+        runCatching{
+            userLoginRepository.findById(editPostCommentAuthDto.userId).get()
+        }.onSuccess { ule ->
+            if(editPostCommentAuthDto.commentId==null){
+                val postAuth = entirePostRepository.findByPostIdAndUserId(editPostCommentAuthDto.postId, ule)
                 return postAuth.isNotEmpty()
             }
-            else{ //댓글 수정 권한 조회일 경우
-                val postAuth = entirePostRepository.findById(editPostCommentAuthDto.postId)
-                if(postAuth.isPresent){
+            else{
+                runCatching{
+                    entirePostRepository.findById(editPostCommentAuthDto.postId).get()
+                }.onSuccess { epe ->
                     val commentAuth = entireCommentRepository.findByCommentIdAndUserIdAndPostId(
-                        editPostCommentAuthDto.commentId, userAuth.get(), postAuth.get()
-                    )
+                        editPostCommentAuthDto.commentId, ule, epe)
                     return commentAuth.isNotEmpty()
+                }.onFailure {
+                    throw PostIdException(editPostCommentAuthDto.postId)
                 }
-                else throw java.lang.IllegalArgumentException("Postid Error!!") //postid가 잘못 되었을 경우
             }
+        }.onFailure {
+            throw UserIdException(editPostCommentAuthDto.userId)
         }
-        else throw java.lang.IllegalArgumentException("Userid Error!!") //userid가 잘못 되었을 경우
+        throw IllegalStateException("Server Error!!") //왜 return이 필요하지? 이해가 안됨
     }
 
-    ///////////////////////////////////////////////////////////////
-    @Transactional
-    fun editPost(postId:Long, editPostDto:EntirePostDto){
-        val editPost = entirePostRepository.findById(postId).get()
 
-        editPost.subject = editPostDto.subject
-        editPost.content = editPostDto.content
-        editPost.date = LocalDateTime.now()
-        editPost.picture = editPostDto.picture
-        //공백 subject, content는 어떻게 처리?
+    @Transactional //공백 content 처리
+    fun editPost(postId:Long, editPostDto:EditPostDto){
+        runCatching {
+            entirePostRepository.findById(postId).get()
+        }.onSuccess {
+            it.subject = editPostDto.subject
+            it.content = editPostDto.content
+            it.date = LocalDateTime.now()
+            it.picture = editPostDto.picture
+        }.onFailure {
+            throw PostIdException(postId)
+        }
     }
 
-    @Transactional
-    fun editComment(commentId:Long, editCommentDto:EntireCommentDto){
-        val editComment = entireCommentRepository.findById(commentId).get()
-        editComment.date = LocalDateTime.now()
-        editComment.content = editCommentDto.content
-        //공백 content는 어떻게 처리?
+    @Transactional //공백 content 처리
+    fun editComment(commentId:Long, editCommentDto:EditCommentDto){
+        runCatching{
+            entireCommentRepository.findById(commentId).get()
+        }.onSuccess {
+            it.date = LocalDateTime.now()
+            it.content = editCommentDto.content
+        }.onFailure {
+            throw CommentIdException(commentId)
+        }
     }
 
     @Transactional
     fun deleteComment(deleteCommentDto: DeleteCommentDto){
-        if (entireCommentRepository.findById(deleteCommentDto.commmentId).get().postId.postId == deleteCommentDto.postId) {
-            entireCommentRepository.deleteById(deleteCommentDto.commmentId)
-            val decreaseCount = entirePostRepository.findById(deleteCommentDto.postId).get()
-            decreaseCount.countComment = decreaseCount.countComment - 1
+        runCatching {
+            entireCommentRepository.findById(deleteCommentDto.commmentId).get().postId.postId
+        }.onSuccess { ecr:Long? ->
+            if(ecr == deleteCommentDto.postId) {
+                entireCommentRepository.deleteById(deleteCommentDto.commmentId)
+                kotlin.runCatching {
+                    entirePostRepository.findById(deleteCommentDto.postId).get()
+                }.onSuccess { epe : EntirePostEntity ->
+                    epe.countComment = epe.countComment - 1
+                }.onFailure {
+                    throw PostIdException(deleteCommentDto.postId)
+                }
+            }
+            else throw java.lang.IllegalArgumentException("PostId didn't match with CommentId.")
+        }.onFailure {
+            throw CommentIdException(deleteCommentDto.postId)
         }
-        else throw java.lang.IllegalArgumentException("Userid Error!!")
+
     }
 
     @Transactional
     fun deletePost(postId:Long){
-        //==========hotpost 에서도 삭제해야함 참고=============//
-        val deletePost = entirePostRepository.findById(postId)
-        if (deletePost.isPresent) {
-            val deleteScrapLike = scrapLikeRepository.findByPostId(deletePost.get())
-            val deletecomment = entireCommentRepository.findByPostId(deletePost.get())
-
-            deleteScrapLike.forEach { i -> scrapLikeRepository.delete(i) }
-            deletecomment.forEach { i -> entireCommentRepository.delete(i) }
+        kotlin.runCatching {
+            entirePostRepository.findById(postId).get()
+        }.onSuccess { epe ->
+            for(sc in scrapLikeRepository.findByPostId(epe))
+                scrapLikeRepository.delete(sc)
+            for(ec in entireCommentRepository.findByPostId(epe))
+                entireCommentRepository.delete(ec)
             entirePostRepository.deleteById(postId)
+        }.onFailure {
+            throw PostIdException(postId)
         }
-        else throw java.lang.IllegalArgumentException("PostId Error!!")
     }
 }
