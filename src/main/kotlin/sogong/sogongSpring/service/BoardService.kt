@@ -65,8 +65,7 @@ class BoardService {
     }
 
     @Transactional
-    fun saveScrapLike(scrapLikeDto: ScrapLikeDto){
-
+    fun saveOrDeleteScrapLike(scrapLikeDto: ScrapLikeDto){
         runCatching{
             userLoginRepository.findById(scrapLikeDto.userId).get()
         }.onSuccess { ulr ->
@@ -77,30 +76,31 @@ class BoardService {
                 val editScrapLike = scrapLikeRepository.findByUserIdAndPostIdAndCategory(
                     ulr, epr, scrapLikeDto.category
                 )
-                val countLike : Int = epr.countLike //게시글 내 좋아요 개수
-
-                //스크랩, 좋아요가 있으면 그냥 저장~
-                if(editScrapLike == null) {
-                    val scrapLikeEntity = ScrapLikeEntity(
-                        userId = ulr,
-                        postId = epr,
-                        category = scrapLikeDto.category
-                    )
-                    scrapLikeRepository.save(scrapLikeEntity)
-                    //좋아요일 때 게시글의 좋아요 수가 1씩 증가하도록 저장.
-                    if (scrapLikeDto.category) {
-                        epr.countLike = countLike + 1
-                        entirePostRepository.save(epr)
-                    }
-                }
-                //스크랩, 좋아요가 있으면 삭제
-                else {
-                    scrapLikeRepository.delete(editScrapLike)
-                    //좋아요를 취소하므로 좋아요 수가 1씩 감소하도록 저장.
-                    epr.countLike = countLike - 1
-                }
+                if(editScrapLike == null) //스크랩, 좋아요가 있으면 그냥 저장~
+                    saveScrapLike(ulr, epr, scrapLikeDto)
+                else //스크랩, 좋아요가 있으면 삭제
+                    deleteScrapLike(epr, editScrapLike)
             }.onFailure {throw PostIdException(scrapLikeDto.postId)}
         }.onFailure {throw UserIdException(scrapLikeDto.userId)}
     }
 
+    private fun saveScrapLike(ulr: UserLoginEntity, epr: EntirePostEntity, scrapLikeDto: ScrapLikeDto) {
+        val scrapLikeEntity = ScrapLikeEntity(
+            userId = ulr,
+            postId = epr,
+            category = scrapLikeDto.category
+        )
+        scrapLikeRepository.save(scrapLikeEntity)
+        //좋아요일 때 게시글의 좋아요 수가 1씩 증가하도록 저장.
+        if (scrapLikeDto.category) {
+            epr.countLike = epr.countLike + 1
+            entirePostRepository.save(epr)
+        }
+    }
+
+    private fun deleteScrapLike(epr: EntirePostEntity, editScrapLike: ScrapLikeEntity){
+        scrapLikeRepository.delete(editScrapLike)
+        //좋아요를 취소하므로 좋아요 수가 1씩 감소하도록 저장.
+        epr.countLike = epr.countLike - 1
+    }
 }

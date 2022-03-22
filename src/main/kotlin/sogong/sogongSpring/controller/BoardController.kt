@@ -1,9 +1,5 @@
 package sogong.sogongSpring.controller
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
-import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
 import sogong.sogongSpring.dto.boardedit.EditPostCommentAuthDto
 import sogong.sogongSpring.dto.board.EntireCommentDto
@@ -36,7 +32,7 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
 
     @PostMapping("/scrap-like")
     fun registScrapLike(@RequestBody scrapLikeDto: ScrapLikeDto){
-        boardService.saveScrapLike(scrapLikeDto)
+        boardService.saveOrDeleteScrapLike(scrapLikeDto)
     }
 
    @GetMapping(value = ["/post-auth", "/comment-auth"])
