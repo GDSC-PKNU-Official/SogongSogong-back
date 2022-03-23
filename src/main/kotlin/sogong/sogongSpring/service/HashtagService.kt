@@ -7,6 +7,7 @@ import sogong.sogongSpring.dto.hashtag.UserHashTagDto
 import sogong.sogongSpring.entity.EntirePostEntity
 import sogong.sogongSpring.entity.PostHashtagEntity
 import sogong.sogongSpring.entity.UserHashtagEntity
+import sogong.sogongSpring.entity.UserLoginEntity
 import sogong.sogongSpring.repository.*
 import java.lang.Math.abs
 import javax.transaction.Transactional
@@ -65,24 +66,8 @@ class HashtagService {
             }.onSuccess {
                 val uhrs = userHashtagRepository.findByUserId(it)
                 val hash = userHashTagDto.hashName
-                var difAndSize = uhrs.size-hash.size
 
-                difAndSize =
-                    if(difAndSize>0){ //ex)해시태그 4->2개로
-                    for(i:Int in 1..difAndSize)
-                        userHashtagRepository.delete(uhrs[uhrs.size-i])
-                    hash.size-1
-                    } else if (difAndSize<0){ //ex)해시태그 2->5개로
-                        for(i:Int in 1..abs(difAndSize)){
-                            userHashtagRepository.save(
-                                UserHashtagEntity(
-                                    userId = it,
-                                    hashName = userHashTagDto.hashName[hash.size-i]))
-                        }
-                        uhrs.size-1
-                    } else uhrs.size-1 //ex)해시태그 2->2개로
-
-                for (i:Int in 0..difAndSize){
+                for (i:Int in 0..getSize(uhrs, hash, it, userHashTagDto)){
                     uhrs.get(i).hashName = hash.get(i)
                     userHashtagRepository.save(uhrs.get(i))
                 }
@@ -112,8 +97,7 @@ class HashtagService {
     fun searchBarPost(hashtags: List<String>, lastPost: Long?) : List<EntirePostEntity> {
         val hashIds = hashtagDbRepository.findByHashNames(hashtags)
         if(hashIds.size == hashtags.size) {
-            val postIds : List<Long>
-            postIds =
+            val postIds : List<Long> =
                 if(lastPost == null)
                     postHashtagRepository.findByHashIds(hashIds.map{ h -> h.hashId }) //Dto로 변경?
                 else
@@ -124,7 +108,7 @@ class HashtagService {
     }
 
     @Transactional
-    fun hashBoardPost(userId: Long, lastPost: Long?) : Any{
+    fun hashBoardPost(userId: Long, lastPost: Long?) : List<EntirePostEntity>{
         runCatching{
             userLoginRepository.findById(userId).get()
         }.onSuccess { ulr ->
@@ -132,8 +116,8 @@ class HashtagService {
             if(uhr.isNotEmpty())
                 return searchBarPost(uhr.map{ name -> name.hashName }, lastPost)
             else
-                return emptyList<String>()
-        }.onFailure { return UserIdException(userId).message ?: 0 }
+                return emptyList()
+        }.onFailure { throw UserIdException(userId) }
         throw IllegalStateException("Server Error!!")
     }
 
@@ -154,4 +138,22 @@ class HashtagService {
         throw IllegalStateException("Server Error!!")
     }
 
+    private fun getSize(uhrs: List<UserHashtagEntity>, hash: List<String>,
+                        ule: UserLoginEntity, userHashTagDto: UserHashTagDto) : Int{
+        val size = uhrs.size-hash.size
+
+        return if(size>0){ //ex)해시태그 4->2개로
+            for(i:Int in 1..size)
+                userHashtagRepository.delete(uhrs[uhrs.size-i])
+            hash.size-1
+        }
+        else if (uhrs.size-hash.size<0){ //ex)해시태그 2->5개로
+            for(i:Int in 1..abs(size)){
+                userHashtagRepository.save(
+                    UserHashtagEntity(userId = ule, hashName = userHashTagDto.hashName[hash.size-i]))
+            }
+            uhrs.size-1
+        }
+        else uhrs.size-1 //ex)해시태그 2->2개로
+    }
 }
