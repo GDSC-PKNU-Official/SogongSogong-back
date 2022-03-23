@@ -10,8 +10,15 @@ import sogong.sogongSpring.entity.PostHashtagEntity
 
 @Repository
 interface PostHashtagRepository : JpaRepository<PostHashtagEntity, Long> {
-    @Query(value = "select distinct p.postId from PostHashtagEntity p where p.hashId in (:hashIds) order by p.postId DESC")
-    fun findByHashIds(@Param("hashIds") hashIds:List<HashtagDbEntity>) : List<EntirePostEntity>
+    @Query(value = "select distinct postId from POST_HASHTAG where hashId in (:hashIds) " +
+            "order by postId desc limit 20"
+        ,nativeQuery=true)
+    fun findByHashIds(@Param("hashIds") hashIds:List<Long?>) : List<Long>
+
+    @Query(value = "select distinct postId from POST_HASHTAG where hashId in (:hashIds) and postId < :postId " +
+            "order by postId desc limit 20"
+        , nativeQuery=true)
+    fun findByHashIdsByPost(@Param("hashIds") hashIds:List<Long?>, @Param("postId") lastPost:Long) : List<Long>
 
     @Query(value = "select hashId from POST_HASHTAG where postId = :postId", nativeQuery = true)
     fun findHashByPost(@Param("postId") postId:Long) : List<Long>

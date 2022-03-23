@@ -14,11 +14,11 @@ interface EntireCommentRepository : JpaRepository<EntireCommentEntity, Long> {
     fun findByPostId(postId:EntirePostEntity) : List<EntireCommentEntity>
 
     @Query(value = "select * from ENTIRE_COMMENT where postId = :postId " +
-            "order by commentId asc limit 6", nativeQuery = true)
+            "order by commentId asc limit 15", nativeQuery = true)
     fun selectPost(@Param(value="postId") postId:Long) : List<EntireCommentEntity>
 
     @Query(value = "select * from ENTIRE_COMMENT where postId = :postId and commentId > :commentId " +
-            "order by commentId asc limit 6",
+            "order by commentId asc limit 15",
         nativeQuery = true)
     fun selectPostByCommentId(@Param(value="postId") postId:Long, @Param(value="commentId") lastCom:Long) : List<EntireCommentEntity>
 }

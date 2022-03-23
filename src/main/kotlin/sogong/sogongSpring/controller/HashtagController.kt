@@ -33,13 +33,13 @@ class HashtagController (var hashtagService: HashtagService){
     }
 
     @GetMapping("/search-bar")
-    fun searchBarPost(@RequestParam hashtag: List<String>) : List<EntirePostEntity>{
-        return hashtagService.searchBarPost(hashtag)
+    fun searchBarPost(@RequestParam hashtag: List<String>, @RequestParam("last-post") lastPost: Long?=null) : List<EntirePostEntity>{
+        return hashtagService.searchBarPost(hashtag, lastPost)
     }
 
-    @GetMapping("hash-board")
-    fun hashBoardPost(@RequestParam("user-id") userId: Long) : Any{
-        return hashtagService.hashBoardPost(userId)
+    @GetMapping("/hash-board")
+    fun hashBoardPost(@RequestParam("user-id") userId: Long, @RequestParam("last-post") lastPost: Long?=null) : Any{
+        return hashtagService.hashBoardPost(userId, lastPost)
     }
 
     @GetMapping("/post/{postId}")

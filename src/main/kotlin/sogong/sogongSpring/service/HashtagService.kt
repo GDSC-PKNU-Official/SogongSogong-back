@@ -110,21 +110,27 @@ class HashtagService {
     }
 
     @Transactional
-    fun searchBarPost(hashtags: List<String>) : List<EntirePostEntity> {
+    fun searchBarPost(hashtags: List<String>, lastPost: Long?) : List<EntirePostEntity> {
         val hashIds = hashtagDbRepository.findByHashNames(hashtags)
-        if(hashIds.size == hashtags.size)
-            return postHashtagRepository.findByHashIds(hashIds) //Dto로 변경?
+        if(hashIds.size == hashtags.size) {
+            var postIds : List<Long>
+            if(lastPost == null)
+                postIds = postHashtagRepository.findByHashIds(hashIds.map{ h -> h.hashId }) //Dto로 변경?
+            else
+                postIds = postHashtagRepository.findByHashIdsByPost(hashIds.map{ h -> h.hashId }, lastPost)
+            return entirePostRepository.findPostByIds(postIds)
+        }
         else throw HashNameException(hashtags)
     }
 
     @Transactional
-    fun hashBoardPost(userId: Long) : Any{
+    fun hashBoardPost(userId: Long, lastPost: Long?) : Any{
         runCatching{
             userLoginRepository.findById(userId).get()
         }.onSuccess { ulr ->
             val uhr = userHashtagRepository.findByUserId(ulr)
             if(uhr.isNotEmpty())
-                return searchBarPost(uhr.map { name -> name.hashName })
+                return searchBarPost(uhr.map{ name -> name.hashName }, lastPost)
             else
                 return emptyList<String>()
         }.onFailure { return UserIdException(userId).message ?: 0 }
