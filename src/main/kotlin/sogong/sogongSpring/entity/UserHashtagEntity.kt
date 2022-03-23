@@ -19,8 +19,5 @@ data class UserHashtagEntity(
     val userId : UserLoginEntity,
 
     @Column(nullable = false)
-    val groupId : Long,
-
-    @Column(nullable = false)
     var hashName : String
 )

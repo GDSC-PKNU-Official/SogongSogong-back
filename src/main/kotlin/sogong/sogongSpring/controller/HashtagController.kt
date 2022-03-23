@@ -32,9 +32,14 @@ class HashtagController (var hashtagService: HashtagService){
         hashtagService.editPostHashtag(postHashtagDto)
     }
 
-    @GetMapping("/or-search")
-    fun searchPost(@RequestParam hashtag: List<String>) : List<EntirePostEntity>{
-        return hashtagService.searchOrPost(hashtag)
+    @GetMapping("/search-bar")
+    fun searchBarPost(@RequestParam hashtag: List<String>) : List<EntirePostEntity>{
+        return hashtagService.searchBarPost(hashtag)
+    }
+
+    @GetMapping("hash-board")
+    fun hashBoardPost(@RequestParam("user-id") userId: Long) : Any{
+        return hashtagService.hashBoardPost(userId)
     }
 
     @GetMapping("/post/{postId}")
@@ -43,8 +48,8 @@ class HashtagController (var hashtagService: HashtagService){
     }
 
     @GetMapping("/user/{userId}")
-    fun printUserHashtag(@PathVariable userId:Long, @RequestParam("group-id") groupId:Long) : List<UserHashtagEntity>{
-        return hashtagService.printUserHashtag(userId, groupId)
+    fun printUserHashtag(@PathVariable userId:Long) : List<UserHashtagEntity>{
+        return hashtagService.printUserHashtag(userId)
     }
 
 
