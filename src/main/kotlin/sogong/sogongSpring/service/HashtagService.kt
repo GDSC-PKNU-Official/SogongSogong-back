@@ -67,21 +67,20 @@ class HashtagService {
                 val hash = userHashTagDto.hashName
                 var difAndSize = uhrs.size-hash.size
 
-                if(difAndSize>0){ //ex)해시태그 4->2개로
+                difAndSize =
+                    if(difAndSize>0){ //ex)해시태그 4->2개로
                     for(i:Int in 1..difAndSize)
                         userHashtagRepository.delete(uhrs[uhrs.size-i])
-                    difAndSize = hash.size-1
-                }
-                else if (difAndSize<0){ //ex)해시태그 2->5개로
-                    for(i:Int in 1..abs(difAndSize)){
-                        userHashtagRepository.save(
-                            UserHashtagEntity(
-                                userId = it,
-                                hashName = userHashTagDto.hashName[hash.size-i]))
-                    }
-                    difAndSize = uhrs.size-1
-                }
-                else difAndSize=uhrs.size-1 //ex)해시태그 2->2개로
+                    hash.size-1
+                    } else if (difAndSize<0){ //ex)해시태그 2->5개로
+                        for(i:Int in 1..abs(difAndSize)){
+                            userHashtagRepository.save(
+                                UserHashtagEntity(
+                                    userId = it,
+                                    hashName = userHashTagDto.hashName[hash.size-i]))
+                        }
+                        uhrs.size-1
+                    } else uhrs.size-1 //ex)해시태그 2->2개로
 
                 for (i:Int in 0..difAndSize){
                     uhrs.get(i).hashName = hash.get(i)
@@ -113,11 +112,12 @@ class HashtagService {
     fun searchBarPost(hashtags: List<String>, lastPost: Long?) : List<EntirePostEntity> {
         val hashIds = hashtagDbRepository.findByHashNames(hashtags)
         if(hashIds.size == hashtags.size) {
-            var postIds : List<Long>
-            if(lastPost == null)
-                postIds = postHashtagRepository.findByHashIds(hashIds.map{ h -> h.hashId }) //Dto로 변경?
-            else
-                postIds = postHashtagRepository.findByHashIdsByPost(hashIds.map{ h -> h.hashId }, lastPost)
+            val postIds : List<Long>
+            postIds =
+                if(lastPost == null)
+                    postHashtagRepository.findByHashIds(hashIds.map{ h -> h.hashId }) //Dto로 변경?
+                else
+                    postHashtagRepository.findByHashIdsByPost(hashIds.map{ h -> h.hashId }, lastPost)
             return entirePostRepository.findPostByIds(postIds)
         }
         else throw HashNameException(hashtags)
