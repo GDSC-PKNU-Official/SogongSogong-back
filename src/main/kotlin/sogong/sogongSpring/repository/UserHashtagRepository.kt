@@ -6,5 +6,5 @@ import sogong.sogongSpring.entity.*
 
 @Repository
 interface UserHashtagRepository : JpaRepository<UserHashtagEntity, Long> {
-    fun findByUserIdAndGroupId(userId:UserLoginEntity, groupId:Long):List<UserHashtagEntity>
+    fun findByUserId(userId:UserLoginEntity):List<UserHashtagEntity>
 }
