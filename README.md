@@ -12,7 +12,7 @@
 Anonymous Communication Platform for Small Business
 to solve the UN's SDGS No.8.<br><br>
 <a href="https://treejin99.notion.site/_-b293dc72cc5b472e90edf3fc707f24dc"><strong>Explore the notion (Only In Korean)</strong></a><br>
-<a href="">View Demo</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/issues">Report Bug & Request Feature</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/main/README.md">Front-End Readme</a>
+<a href="">View Demo</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/issues">Report Bug & Request Feature</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/develop/README.md">Front-End Readme</a>
 
 </div>
 
@@ -37,7 +37,7 @@ to solve the UN's SDGS No.8.<br><br>
 **This is Back-End readme page about *Sogong Sogong* Project.**
       
 If you want to see details about service, please enter the link down below.
-<br><a href = "https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/main/README.md">SogongSogong-Front Readme.md</a>
+<br><a href = "https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/develop/README.md">SogongSogong-Front Readme.md</a>
 
 
 ### Tech Stack(Back-End)
