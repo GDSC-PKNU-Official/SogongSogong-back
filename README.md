@@ -1,21 +1,23 @@
+<div align="center">
+  
+[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url]
+  
 
-# 소공소공, Sogong Sogong
+<br>
+<a href="https://github.com/othneildrew/Best-README-Template">
+<img src="https://i.imgur.com/NbY0NQh.png" alt="Logo" width="30%">
+</a>
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-    <img src="https://i.imgur.com/NbY0NQh.png" alt="Logo" width="20%" height="20%">
-  <p align="left">
-</p>
+<strong>Sogong Sogong (소공소공)</strong><br>
+Anonymous Communication Platform for Small Business
+to solve the UN's SDGS No.8.<br><br>
+<a href="https://treejin99.notion.site/_-b293dc72cc5b472e90edf3fc707f24dc"><strong>Explore the notion (Only In Korean)</strong></a><br>
+<a href="">View Demo</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/issues">Report Bug & Request Feature</a> · <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/main/README.md">Front-End Readme</a>
 
-    **Sogong Sogong** is our team's idea to find the answer to "how" to grow as a small business communication channel to solve the  UN's SDGS No.8.  
-<center>
-        <a href="https://treejin99.notion.site/_-b293dc72cc5b472e90edf3fc707f24dc"><strong>Explore the notion (Only In Korean)</strong></a><br>
-        <a href="">View Demo</a><br>
-        <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-back/issues">Report Bug & Request Feature</a><br>
-</center>
+</div>
+
 <!-- TABLE OF CONTENTS -->
-<details open="open">
+<details>
   <summary>Table of Contents</summary>
   <ol>
       <li><a href="#Introduction">Introduction</a></li>
