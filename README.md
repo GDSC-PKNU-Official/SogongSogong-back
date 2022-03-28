@@ -21,7 +21,7 @@ to solve the UN's SDGS No.8.<br><br>
   <summary>Table of Contents</summary>
   <ol>
       <li><a href="#Introduction">Introduction</a></li>
-      <li><a href="#Tech-Stack(Back-End)">Tech Stack(Back-End)</a></li>    
+      <li><a href="#tech">Tech Stack(Back-End)</a></li>    
       <li><a href="#Prerequisites">Prerequisites</a></li>
       <li><a href="#Back-End-Structure">Back-End Structure</a></li>
       <ul>
@@ -40,7 +40,7 @@ If you want to see details about service, please enter the link down below.
 <br><a href = "https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/develop/README.md">SogongSogong-Front Readme.md</a>
 
 
-### Tech Stack(Back-End)
+<h3 id="tech"> Tech Stack(Back-End) </h3>
 <img src="https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white"><img src="https://img.shields.io/badge/kotlin-%230095D5.svg?style=for-the-badge&logo=kotlin&logoColor=white"><img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white">
 
 ***
@@ -59,7 +59,7 @@ If you want to see details about service, please enter the link down below.
 ## Back-End Structure
 ### ERD
 (코드 정리 후 올릴 예정)<br>
-Detail description about DB, see <a href="#3.-Entity,-Repository">this part</a>.
+Detail description about DB, see <a href="#er">this part</a>.
 
 ### Directory
 ```
@@ -73,13 +73,16 @@ Main sources are placed to 'SogongSogong-back/src/main/kotlin/sogong/sogongSprin
 - DTOs created which need to send input and output to client.<br>
 - Used less DTOs than Entities because it's still under development.<br>
 I will add it soon.
-#### 3. Entity, Repository
+
+<h4 id="er"> 3. Entity, Repository </h4>
+
 - **EntirePost** : Information about post writing.<br>
 - **EntireComment** : Information about comment writing.  <br>
 - **ScrapLike** : Information about clippings and liked of one post that other users saved.<br>
 - **HashtagDb** : Information about types of hashtag.<br>
 - **PostHashtag** : Information about hashtags of one post that user wrote.<br>
-- *UserHashtag** : Information about hashtags of 'Hastag Board' that user designated and saved.<br>
+- **UserHashtag** : Information about hashtags of 'Hastag Board' that user designated and saved.<br>
+
 #### 4. Service
 - I seperated it according to controller detailed functions.<br>
 - **Board** : Saving service about board.<br>
