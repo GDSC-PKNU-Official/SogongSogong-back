@@ -3,9 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="https://i.imgur.com/NbY0NQh.png" alt="Logo" width="20%" height="20%">
-  </a>
   <p align="left">
 </p>
 
