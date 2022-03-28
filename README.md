@@ -1,4 +1,4 @@
-<center>
+
 # 소공소공, Sogong Sogong
 
 <!-- PROJECT LOGO -->
@@ -8,13 +8,11 @@
   <p align="left">
 </p>
 
-```
-**Sogong Sogong** is our team's idea to find the answer to "how" to grow as a small business communication channel to solve the  UN's SDGS No.8. 
-```
-    
-<a href="https://treejin99.notion.site/_-b293dc72cc5b472e90edf3fc707f24dc"><strong>Explore the notion (Only In Korean)</strong></a><br>
-    <a href="">View Demo</a><br>
-    <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-back/issues">Report Bug & Request Feature</a><br>
+    **Sogong Sogong** is our team's idea to find the answer to "how" to grow as a small business communication channel to solve the  UN's SDGS No.8.  
+<center>
+        <a href="https://treejin99.notion.site/_-b293dc72cc5b472e90edf3fc707f24dc"><strong>Explore the notion (Only In Korean)</strong></a><br>
+        <a href="">View Demo</a><br>
+        <a href="https://github.com/GDSC-PKNU-21-22/SogongSogong-back/issues">Report Bug & Request Feature</a><br>
 </center>
 <!-- TABLE OF CONTENTS -->
 <details open="open">
