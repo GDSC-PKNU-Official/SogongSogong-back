@@ -4,7 +4,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://i.imgur.com/NbY0NQh.png" alt="Logo" width="30%" height="30%">
+    <img src="https://i.imgur.com/NbY0NQh.png" alt="Logo" width="20%" height="20%">
   </a>
   <p align="left">
 </p>
@@ -37,8 +37,8 @@
 ## Introduction
 **This is Back-End readme page about *Sogong Sogong* Project.**
       
-If you want to see details about service, Please enter the link down below.
-<br><a href = "">여기는 프론트 readme 링크~~</a>
+If you want to see details about service, please enter the link down below.
+<br><a href = "https://github.com/GDSC-PKNU-21-22/SogongSogong-front/blob/main/README.md">SogongSogong-Front Readme.md</a>
 
 
 ### Tech Stack(Back-End)
