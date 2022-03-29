@@ -114,9 +114,6 @@ Any contributions you make are **greatly appreciated**.
 
 ***
 
-[![contributors][contributors-shield]][contributors-url] [![forks][forks-shield]][forks-url] [![stars][stars-shield]][stars-url] [![issues][issues-shield]][issues-url]
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
