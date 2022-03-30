@@ -22,6 +22,9 @@ class UserService {
         urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8")
         urlConnection.doOutput = true
 
+        businessAuthDto.startDate = businessAuthDto.startDate.replace(" ", "")
+        businessAuthDto.startDate = businessAuthDto.startDate.replace("-","")
+
         val bw = BufferedWriter(OutputStreamWriter(urlConnection.outputStream))
         bw.write("{\"businesses\": [{\"b_no\" : \"" + businessAuthDto.num + "\"" +
                 ",\"start_dt\" : \""+ businessAuthDto.startDate + "\"" +
@@ -30,7 +33,7 @@ class UserService {
         bw.close()
 
         val br = BufferedReader(InputStreamReader(urlConnection.inputStream, "UTF-8"))
-        val str_Filter = br.readLine().split("\"valid\"")[1].startsWith(":\"01\"")
-        return str_Filter
+        val strFilter = br.readLine().split("\"valid\"")[1].startsWith(":\"01\"")
+        return strFilter
     }
 }
