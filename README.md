@@ -59,7 +59,11 @@ If you want to see details about service, please enter the link down below.
 
 ## Back-End Structure
 ### ERD
-(코드 정리 후 올릴 예정)<br>
+<br>
+<p align="center">
+          <img src="https://i.imgur.com/3PndSQo.png" width="75%">
+</p>
+<br>
 Detail description about DB, see <a href="#er">this part</a>.
 
 ### Directory
