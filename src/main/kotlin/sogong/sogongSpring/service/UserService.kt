@@ -33,7 +33,7 @@ class UserService {
         bw.close()
 
         val br = BufferedReader(InputStreamReader(urlConnection.inputStream, "UTF-8"))
-        val str_Filter = br.readLine().split("\"valid\"")[1].startsWith(":\"01\"")
-        return str_Filter
+        val strFilter = br.readLine().split("\"valid\"")[1].startsWith(":\"01\"")
+        return strFilter
     }
 }
