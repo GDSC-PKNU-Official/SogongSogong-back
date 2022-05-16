@@ -92,7 +92,7 @@ class BoardPrintService {
     fun printBestPost(lastPost: Long?) : List<EntirePostEntity>{
         val bestPost : List<EntirePostEntity> =
             if (lastPost == null) entirePostRepository.findHotPost(10)
-            else entirePostRepository.findHotPostByPost(10, lastPost)
+            else entirePostRepository.findBestPostByPost(10, lastPost)
         return bestPost
     }
 }
