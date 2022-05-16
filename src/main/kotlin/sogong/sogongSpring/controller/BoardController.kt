@@ -87,7 +87,7 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     }
 
     @GetMapping("/hot-post")
-    fun printHotPost(@RequestParam("last-post11") lastPost:Long?=null) : List<EntirePostEntity>{
+    fun printHotPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
         return boardPrintService.printHotPost(lastPost)
     }
 
