@@ -19,6 +19,11 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter(){
         return BCryptPasswordEncoder()
     }
 
+    @Bean
+    override fun authenticationManagerBean():AuthenticationManager{
+        return super.authenticationManagerBean()
+    }
+
     @Throws(Exception::class)
     override fun configure(http : HttpSecurity) {
         http
