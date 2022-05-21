@@ -32,6 +32,7 @@ dependencies {
 	implementation("org.javassist:javassist:3.15.0-GA")
 	implementation("org.projectlombok:lombok:1.18.22")// lombok 추가
 	implementation("com.squareup.okhttp3:okhttp:4.9.3")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<KotlinCompile> {
