@@ -24,17 +24,17 @@ class JwtTokenIssue (private val userDetailsService : UserDetailsService) {
     //JWT 토큰 생성
     fun createToken(userId : String) : String{
         val claims : Claims = Jwts.claims() //JWT paylaod에 저장되는 정보들
-            .setSubject(userId)
-            .setIssuedAt(Date())
-            .setExpiration(Date(Date().time + tokenValidTime))
-        claims["userId"] = userId
+            .setSubject(userId) //저장 구분 단위
+            .setIssuedAt(Date()) //토큰 생성일 : 현재 시간
+            .setExpiration(Date(Date().time + tokenValidTime)) //토큰 만료일 : 현재시간+tokenValidTime
+        claims["userId"] = userId //담고 싶은 값
 
         val secretKeyToArray : Key = Keys.hmacShaKeyFor(secretKey.toByteArray(StandardCharsets.UTF_8))
 
         val jwt : String = Jwts.builder()
             .setHeaderParam("typ", "JWT")
-            .setClaims(claims)
-            .signWith(secretKeyToArray, SignatureAlgorithm.HS256)
+            .setClaims(claims) //claim 넣자
+            .signWith(secretKeyToArray, SignatureAlgorithm.HS256) //비밀키와 암호화 알고리즘 설정
             .compact()
         return jwt
     }
