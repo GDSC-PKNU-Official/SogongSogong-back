@@ -9,11 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import kotlin.jvm.Throws
 
 @Configuration
 @EnableWebSecurity
-class SpringSecurityConfig : WebSecurityConfigurerAdapter(){
+class SpringSecurityConfig(private val jwtTokenIssue: JwtTokenIssue) : WebSecurityConfigurerAdapter(){
 
     //비밀번호 encoder 사용
     @Bean
@@ -31,16 +32,17 @@ class SpringSecurityConfig : WebSecurityConfigurerAdapter(){
     @Throws(Exception::class)
     override fun configure(http : HttpSecurity) {
         http
-            .httpBasic().disable() //rest api
+            .httpBasic().disable() //로그인 기본 창이 없어진다~
                 .csrf().disable() //localhost에서 테스트하기 위해 csrf 취소
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 말고 토큰할거임
             .and()
-                .authorizeRequests() //요청 사용 권한
-                .anyRequest().authenticated() //일단 전부 허용
-//            .and()
-//                .addFilterBefore(, ) //JWT Token 만들면 여기에 적용하면 됨
+                .authorizeRequests() //rest 사용권한 : 일단 모두 열어놓겠음
+                .anyRequest().permitAll()
+                //.antMatchers("/api/**").authenticated() // 나머지 url은 요청받아야함
+                //.antMatchers("/signup/**", "/signin/**", "/logout/**").permitAll() //회원가입, 로그인, 로그아웃은 모두 허용
             .and()
-                .logout().logoutUrl("/logout") //요청 url로 로그아웃 받기
-                .logoutSuccessUrl("/login") //logout 성공시 url 이동...인가? 잘 모르겠음
+                .addFilterBefore(
+                    JwtAuthenticationFilter(jwtTokenIssue)
+                    , UsernamePasswordAuthenticationFilter::class.java)
     }
 }
