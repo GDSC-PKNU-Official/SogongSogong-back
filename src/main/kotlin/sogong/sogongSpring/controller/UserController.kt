@@ -1,8 +1,6 @@
 package sogong.sogongSpring.controller
 
-import org.apache.coyote.Response
 import org.springframework.http.ResponseEntity
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,16 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import sogong.sogongSpring.dto.user.*
 import sogong.sogongSpring.entity.UserLoginEntity
+import sogong.sogongSpring.service.PasswordNotMatchException
 import sogong.sogongSpring.service.UserLoginService
+import sogong.sogongSpring.service.UserNotFoundException
 import sogong.sogongSpring.service.UserService
 import kotlin.Throws
 import java.io.IOException
 
 @RestController
 @RequestMapping("/user")
-class UserController (var userService: UserService,
-                      var userLoginService: UserLoginService,
-                      var passwordEncoder: PasswordEncoder) {
+class UserController (val userService: UserService,
+                      val userLoginService: UserLoginService,
+                      val passwordEncoder: PasswordEncoder) {
 
     @GetMapping("/business")
     @Throws(IOException::class)
@@ -39,9 +39,14 @@ class UserController (var userService: UserService,
     @PostMapping("/login")
     @Throws(IOException::class)
     fun login(@RequestBody userLoginReq: UserLoginReq) : ResponseEntity<UserLoginRes>{
-        //!userLoginService.existUser(userLoginReq.email)
+        if(!userLoginService.existUser(userLoginReq.email)){
+            throw UserNotFoundException()
+        }
         val user:UserLoginEntity = userLoginService.findUser(userLoginReq.email)
-        //passwordEncoder.matches(userLoginReq.password, user.password)
+
+        if(!passwordEncoder.matches(userLoginReq.password, user.password)){
+            throw PasswordNotMatchException()
+        }
         return ResponseEntity.ok(userLoginService.login(userLoginReq))
     }
 }

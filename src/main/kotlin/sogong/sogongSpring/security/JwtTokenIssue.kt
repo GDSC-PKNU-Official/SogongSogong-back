@@ -17,12 +17,14 @@ import javax.servlet.http.HttpServletRequest
 
 @Component
 class JwtTokenIssue (private val userDetailsService : UserDetailsService) {
+    companion object{
+        const val tokenValidTime = 30*60*1000L
+    }
     private var secretKey = "#$#%#$%#$%$!@$!@!@$%%#$#$$%^&%$&&%&$" //secretKey는 비밀^^
     private val secretKeyToArray : Key = Keys.hmacShaKeyFor(secretKey.toByteArray(StandardCharsets.UTF_8))
-    private val tokenValidTime = 30*60*1000L //30분이라함
 
     @PostConstruct
-    protected fun init(){
+    fun init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray()) //Base64 인코딩
     }
 

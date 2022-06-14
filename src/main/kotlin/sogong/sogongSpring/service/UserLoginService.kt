@@ -1,6 +1,5 @@
 package sogong.sogongSpring.service
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import sogong.sogongSpring.dto.user.UserLoginReq

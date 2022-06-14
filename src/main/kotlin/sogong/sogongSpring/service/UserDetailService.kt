@@ -1,12 +1,9 @@
 package sogong.sogongSpring.service
 
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
-import sogong.sogongSpring.entity.UserLoginEntity
 import sogong.sogongSpring.repository.UserLoginRepository
-import java.io.IOException
 import java.util.InputMismatchException
 
 @Service

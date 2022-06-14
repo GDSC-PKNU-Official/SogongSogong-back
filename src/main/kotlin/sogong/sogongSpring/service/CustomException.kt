@@ -15,3 +15,9 @@ class UserIdException(id:Long) : ResponseStatusException(
 class HashNameException(hash:List<String>) : ResponseStatusException(
     HttpStatus.NOT_FOUND, String.format("HashName Error : %s", hash)
 )
+class UserNotFoundException : ResponseStatusException(
+    HttpStatus.NOT_FOUND, String.format("Email Not Found")
+)
+class PasswordNotMatchException : ResponseStatusException(
+    HttpStatus.UNAUTHORIZED, String.format("Password Not Matched")
+)
