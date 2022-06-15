@@ -2,10 +2,10 @@ package sogong.sogongSpring.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import lombok.NoArgsConstructor
-import org.hibernate.annotations.GeneratorType
-import org.springframework.format.annotation.DateTimeFormat
+//import org.hibernate.annotations.GeneratorType
+//import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
-import java.util.*
+//import java.util.*
 import javax.persistence.*
 
 @Entity
