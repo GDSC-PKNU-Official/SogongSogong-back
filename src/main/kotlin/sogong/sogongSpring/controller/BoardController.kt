@@ -95,4 +95,7 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
     fun printBestPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
         return boardPrintService.printBestPost(lastPost)
     }
+
+    @GetMapping("/test")
+    fun aatest():String{return "Success"}
 }
