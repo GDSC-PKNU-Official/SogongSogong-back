@@ -42,13 +42,13 @@ class HashtagController (var hashtagService: HashtagService){
         return hashtagService.hashBoardPost(userId, lastPost)
     }
 
-    @GetMapping("/post/{postId}")
-    fun printPostHashtag(@PathVariable postId : Long) : List<String>{
+    @GetMapping("/print/post")
+    fun printPostHashtag(@RequestParam("id") postId : Long) : List<String>{
         return hashtagService.printPostHashtag(postId)
     }
 
-    @GetMapping("/user/{userId}")
-    fun printUserHashtag(@PathVariable userId:Long) : List<UserHashtagEntity>{
+    @GetMapping("/print/user")
+    fun printUserHashtag(@RequestParam("id") userId:Long) : List<UserHashtagEntity>{
         return hashtagService.printUserHashtag(userId)
     }
 

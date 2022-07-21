@@ -36,8 +36,14 @@ class SpringSecurityConfig(private val jwtTokenIssue: JwtTokenIssue) : WebSecuri
                 .csrf().disable() //localhost에서 테스트하기 위해 csrf 취소
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 말고 토큰할거임
             .and()
-                .authorizeRequests() //rest 사용권한 : 일단 모두 열어놓겠음
-                .anyRequest().permitAll()
+                .authorizeRequests() //rest 사용권한
+                .antMatchers("/board/print/hot").permitAll()
+                .antMatchers("/board/print/best").permitAll()
+                .antMatchers("/board/print/post/**").permitAll()
+                .antMatchers("/board/print/all").permitAll()
+                .antMatchers("/board/test").authenticated()
+                .antMatchers("/user/**").permitAll()
+                .anyRequest().authenticated()
                 //.antMatchers("/api/**").authenticated() // 나머지 url은 요청받아야함
                 //.antMatchers("/signup/**", "/signin/**", "/logout/**").permitAll() //회원가입, 로그인, 로그아웃은 모두 허용
             .and()
