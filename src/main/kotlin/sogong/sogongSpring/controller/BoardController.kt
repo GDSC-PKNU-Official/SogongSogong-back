@@ -63,35 +63,35 @@ class BoardController (var boardService: BoardService, var boardServiceEdit: Boa
         boardServiceEdit.deletePost(postId)
     }
 
-    @GetMapping("/entire-post")
-    fun printPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
+    @GetMapping("/print/all")
+    fun printPost(@RequestParam("last") lastPost:Long?=null) : List<EntirePostEntity>{
         return boardPrintService.printEntirePost(lastPost)
     }
 
-    @GetMapping("/one-post/{postId}")
-    fun printOnePost(@PathVariable postId:Long) : EntirePostEntity{
+    @GetMapping("/print/post")
+    fun printOnePost(@RequestParam("id") postId:Long) : EntirePostEntity{
         return boardPrintService.printOnePost(postId)
     }
 
-    @GetMapping("/comment")
-    fun printComment(@RequestParam("post-id") postId:Long,
-                     @RequestParam("last-comment") lastCom:Long?=null):List<EntireCommentEntity>{
+    @GetMapping("/print/comment")
+    fun printComment(@RequestParam("id") postId:Long,
+                     @RequestParam("last") lastCom:Long?=null):List<EntireCommentEntity>{
         return boardPrintService.printComment(postId, lastCom)
     }
 
-    @GetMapping("/scrap-like")
-    fun printScrapLike(@RequestParam("user-id") userId:Long,
+    @GetMapping("/print/scrap-like")
+    fun printScrapLike(@RequestParam("id") userId:Long,
                        @RequestParam("scrap-like") scrapLike:Boolean,
-                       @RequestParam("last-scrap") lastScrap:Long?=null) : List<PrintEntirePostDto>{
+                       @RequestParam("last") lastScrap:Long?=null) : List<PrintEntirePostDto>{
         return boardPrintService.printScrapLike(userId, scrapLike, lastScrap)
     }
 
-    @GetMapping("/hot-post")
+    @GetMapping("/print/hot")
     fun printHotPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
         return boardPrintService.printHotPost(lastPost)
     }
 
-    @GetMapping("/best-post")
+    @GetMapping("/print/best")
     fun printBestPost(@RequestParam("last-post") lastPost:Long?=null) : List<EntirePostEntity>{
         return boardPrintService.printBestPost(lastPost)
     }

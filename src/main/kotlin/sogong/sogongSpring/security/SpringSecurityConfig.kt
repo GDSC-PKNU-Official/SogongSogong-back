@@ -37,10 +37,10 @@ class SpringSecurityConfig(private val jwtTokenIssue: JwtTokenIssue) : WebSecuri
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 말고 토큰할거임
             .and()
                 .authorizeRequests() //rest 사용권한
-                .antMatchers("/board/hot-post").permitAll()
-                .antMatchers("/board/best-post").permitAll()
-                .antMatchers("/board/one-post/**").permitAll()
-                .antMatchers("/board/entire-post").permitAll()
+                .antMatchers("/board/print/hot").permitAll()
+                .antMatchers("/board/print/best").permitAll()
+                .antMatchers("/board/print/post/**").permitAll()
+                .antMatchers("/board/print/all").permitAll()
                 .antMatchers("/board/test").authenticated()
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
