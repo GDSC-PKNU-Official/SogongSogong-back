@@ -3,6 +3,7 @@ package sogong.sogongSpring.entity
 import lombok.NoArgsConstructor
 //import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 //import java.util.*
 import javax.persistence.*
@@ -24,8 +25,10 @@ class UserLoginEntity(
     val email: String,
 
     @Column(nullable = false)
-    var passwd: String
+    var passwd: String,
 
+    @Column
+    private val authority: String = ""
 //    @Column(nullable = false)
 //    @Temporal(TemporalType.DATE)
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -43,8 +46,8 @@ class UserLoginEntity(
 //    @Column(length = 50)
 //    var sectors: String? = null
 ) : UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return null
+    override fun getAuthorities(): Collection<out GrantedAuthority> {
+        return listOf(SimpleGrantedAuthority(authority))
     }
 
     override fun getPassword(): String {
